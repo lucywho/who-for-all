@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+/* welcome page */
+#welcome-container {
+    min-height: 100vh;
+    background-image: url(../darkbluegalaxy.jpg);
+    background-color: blue;
+    background-size: cover;
+}
+
+#h1welcome {
+    color: lightblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 300px;
+    height: 50px;
+    background-color: lightyellow;
+    border: blue solid 2px;
+    margin: 5px;
+    font-size: 30px;
+    color: blue;
+}
+input:focus {
+    background-color: rgb(252, 252, 178);
+    border: rgb(31, 31, 250) solid 2px;
+    outline: none;
+}
+
+#canvas {
+    width: 400px;
+    height: 75px;
+    border: blue solid 2px;
+    background-color: lightyellow;
+    padding: 5px;
+    margin: 5px;
+}
+
+#submit {
+    width: 300px;
+    height: 50px;
+    background-color: lightyellow;
+    border: blue solid 2px;
+    margin: 5px;
+    font-size: 30px;
+    color: blue;
+}
+
+#submit:focus {
+    outline: lightskyblue;
+    background-color: rgb(252, 252, 178);
+}
+
+/* thank you page */
+#thankyou-container {
+    min-height: 100vh;
+    background-image: url(../greenaurora.jpg);
+    background-color: green;
+    background-size: cover;
+}
+
+#h1thankyou {
+    color: lightgreen;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* signatories page */
+#signatories-container {
+    min-height: 100vh;
+    background-image: url(../pinkstarrysky.jpg);
+    background-color: pink;
+    background-size: cover;
+}
+
+#h1signatories {
+    color: lightpink;
+    font-family: Arial, Helvetica, sans-serif;
+}

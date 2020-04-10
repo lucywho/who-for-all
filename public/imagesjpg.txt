@@ -1,0 +1,11 @@
+all images go in public folder
+delete this file
+
+darkbluegalaxy.jpg (c)
+Photo by Miriam Espacio from Pexels
+
+greenaurora.jpg
+Photo by Tobias Bjørkli from Pexels
+
+pinkstarrysky.jpg
+Photo by Free Nature Stock from Pexels
