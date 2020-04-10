@@ -27,7 +27,7 @@ app.get("/welcome", (req, res) => {
         layout: "main",
     });
 });
-
+//
 app.post("/welcome", (req, res) => {
     //capture inputs
     const first_name = req.body.first_name;
@@ -35,6 +35,11 @@ app.post("/welcome", (req, res) => {
     const signature = "sig placeholder";
 
     //check all there
+    if (!req.body.first_name || !req.body.last_name || !signature) {
+        console.log("missing inputs");
+        //TO DO remove class "hidden" from id error-msg and reroute to "/welcome"
+        return; //delete this when above done
+    }
 
     db.addName(first_name, last_name, signature)
         .then(() => {
@@ -42,19 +47,21 @@ app.post("/welcome", (req, res) => {
         })
         .catch((err) => {
             console.log("err in addName: ", err);
-            //reroute to "/petition" with error message
+            //reroute to "/welcome" with error message
         });
-
+    //TO DO: set cookie when post successful
     res.redirect("/thankyou");
 });
 
 app.get("/thankyou", (req, res) => {
+    //TO DO: check for cookie and redirect to welcome if missing
     res.render("thankyou", {
         layout: "main",
     });
 });
 
 app.get("/signatories", (req, res) => {
+    //TO DO: check for cookie and redirect to welcome if missing
     res.render("signatories", {
         layout: "main",
     });
@@ -64,13 +71,12 @@ app.get("/signatories", (req, res) => {
             let list = "";
 
             for (let i = 0; i < results.length; i++) {
-                //console.log("list of results: ", results[i]);
                 let item = results[i];
                 list += item.first_name + " " + item.last_name + "<br>";
             }
             console.log("list: ", list);
-
-            res.end(list);
+            //TO DO: work out how to return this to the signatories-list div
+            //res.end(list);
         })
         .catch((err) => {
             console.log("err in getNames: ", err);
