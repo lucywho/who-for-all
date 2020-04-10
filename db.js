@@ -5,7 +5,7 @@ const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition"); //nee
 
 module.exports.getNames = () => {
     return db
-        .query(`SELECT * FROM `)
+        .query(`SELECT first_name, last_name FROM signatures`)
         .then((results) => {
             return results.rows;
         })

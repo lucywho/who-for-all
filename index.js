@@ -2,6 +2,15 @@ const express = require("express");
 const app = express();
 const db = require("./db.js");
 const handlebars = require("express-handlebars");
+const cookieParser = require("cookie-parser");
+
+app.use(
+    express.urlencoded({
+        extended: false,
+    })
+);
+
+app.use(cookieParser());
 
 app.engine("handlebars", handlebars());
 app.set("view engine", "handlebars");
@@ -10,28 +19,24 @@ app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
     console.log("get request to / route succeeded");
-    //reroute to /welcome
-    res.render("welcome", {
-        layout: "main",
-    });
+    res.redirect("/welcome");
 });
 
 app.get("/welcome", (req, res) => {
     res.render("welcome", {
         layout: "main",
     });
-    //**route in browser
-    // db.getNames()
-    //     .then((results) => {
-    //         console.log("results :", results);
-    //     })
-    //     .catch((err) => {
-    //         console.log("err in getNames: ", err);
-    //     });
 });
 
 app.post("/welcome", (req, res) => {
-    db.addName(x, y, z) //change x, y, z to inputs
+    //capture inputs
+    const first_name = req.body.first_name;
+    const last_name = req.body.last_name;
+    const signature = "sig placeholder";
+
+    //check all there
+
+    db.addName(first_name, last_name, signature)
         .then(() => {
             console.log("post worked");
         })
@@ -39,6 +44,8 @@ app.post("/welcome", (req, res) => {
             console.log("err in addName: ", err);
             //reroute to "/petition" with error message
         });
+
+    res.redirect("/thankyou");
 });
 
 app.get("/thankyou", (req, res) => {
@@ -51,6 +58,23 @@ app.get("/signatories", (req, res) => {
     res.render("signatories", {
         layout: "main",
     });
+
+    db.getNames()
+        .then((results) => {
+            let list = "";
+
+            for (let i = 0; i < results.length; i++) {
+                //console.log("list of results: ", results[i]);
+                let item = results[i];
+                list += item.first_name + " " + item.last_name + "<br>";
+            }
+            console.log("list: ", list);
+
+            res.end(list);
+        })
+        .catch((err) => {
+            console.log("err in getNames: ", err);
+        });
 });
 
 //============================//

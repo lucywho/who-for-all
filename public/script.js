@@ -1,3 +1,5 @@
+import { text } from "express";
+
 // canvas / signature code goes here
 console.log("javascript attached");
 
@@ -37,3 +39,8 @@ function drawSignature(event) {
     context.lineTo(position.x, position.y);
     context.stroke();
 }
+
+//save canvas image to save-sig field
+let canvas = document.getElementById("canvas");
+let signature = canvas.toDataURL();
+document.getElementById("save-sig").appendChild(signature);
