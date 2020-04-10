@@ -1,39 +1,39 @@
 // canvas / signature code goes here
-console.log("js attached");
+console.log("javascript attached");
 
 let context = document.getElementById("canvas").getContext("2d");
 
+//starting position
 let position = {
     x: 0,
     y: 0,
 };
 
-function drawSignature() {
-    context.strokeStyle = "blue";
+//event listeners
+document.getElementById("canvas").addEventListener("mousedown", newPosition);
 
-    context.beginPath();
-    context.moveTo(position.x, position.y); //get from mousedown
-    newPosition(event);
-    context.lineTo(position.x, position.y); //get from mousemove
-    context.stroke();
+document.getElementById("canvas").addEventListener("mouseenter", newPosition);
+
+document.getElementById("canvas").addEventListener("mousemove", drawSignature);
+
+//work out new position
+function newPosition(event) {
+    //TODO: work out how to remove offset
+    position.x = event.pageX;
+    position.y = event.pageY;
 }
 
-//event listener for mousedown
-document
-    .getElementById("canvas")
-    .addEventListener("mousedown", function(event) {
-        console.log("mousedown detected");
+//draw lines
+function drawSignature(event) {
+    if (event.buttons !== 1) {
+        return;
+    }
 
-        position.x = event.pageX;
-        position.y = event.pageY;
-    });
+    context.beginPath();
+    context.strokeStyle = "blue";
 
-document.addEventListener("mousemove", function(event) {
-    console.log("mousemove detected");
+    context.moveTo(position.x, position.y);
+    newPosition(event);
     context.lineTo(position.x, position.y);
     context.stroke();
-});
-
-document.addEventListener("mouseup", function(event) {
-    console.log("mouseup detected");
-});
+}

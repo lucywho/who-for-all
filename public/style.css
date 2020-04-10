@@ -35,8 +35,8 @@ input:focus {
 }
 
 #canvas {
-    width: 400px;
-    height: 75px;
+    width: 500px;
+    height: 100px;
     border: blue solid 2px;
     background-color: lightyellow;
     padding: 5px;
