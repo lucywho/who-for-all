@@ -15,8 +15,6 @@ app.use(cookieParser());
 app.engine("handlebars", handlebars());
 app.set("view engine", "handlebars");
 
-app.use(express.static("./public"));
-
 app.get("/", (req, res) => {
     console.log("get request to / route succeeded");
     res.redirect("/welcome");
@@ -38,9 +36,10 @@ app.post("/welcome", (req, res) => {
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
         // TO DO
+
         //req.body.error_msg.classList.remove("hidden");
         console.log("error_msg", req.body.error_msg);
-        res.redirect("/welcome");
+        //res.redirect("/welcome");
     }
 
     db.addName(first_name, last_name, signature)
@@ -51,13 +50,13 @@ app.post("/welcome", (req, res) => {
             console.log("post worked");
         });
     //TO DO: set cookie when post successful
-    res.cookie("signed");
+    res.cookie("signed", "signed");
     res.redirect("/thankyou");
 });
 
 app.get("/thankyou", (req, res) => {
     //TO DO: check for cookie and redirect to welcome if missing
-    if (!req.body.cookie) {
+    if (req.body.cookie !== "signed") {
         res.redirect("/welcome");
     } else {
         res.render("thankyou", {
@@ -68,7 +67,7 @@ app.get("/thankyou", (req, res) => {
 
 app.get("/signatories", (req, res) => {
     //TO DO: check for cookie and redirect to welcome if missing
-    if (!req.body.cookie) {
+    if (req.body.cookie !== "signed") {
         res.redirect("/welcome");
     } else {
         res.render("signatories", {
@@ -86,12 +85,14 @@ app.get("/signatories", (req, res) => {
             }
             console.log("list: ", list);
             //TO DO: work out how to return this to the signatories-list div
-            res.end("/signatories/#signatories-list" + list);
+            //res.end("/signatories/#signatories-list" + list);
         })
         .catch((err) => {
             console.log("err in getNames: ", err);
         });
 });
+
+app.use(express.static("./public"));
 
 //============================//
 app.listen(8080, () => console.log("petition server running"));

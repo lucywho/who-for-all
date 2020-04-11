@@ -44,4 +44,3 @@ function drawSignature(event) {
 let canvas = document.getElementById("canvas");
 let signature = canvas.toDataURL();
 console.log(signature);
-//document.getElementById("save-sig").innerHTML(`${signature}`); DOESN'T WORK
