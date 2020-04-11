@@ -24,6 +24,10 @@ app.get("/welcome", (req, res) => {
     res.render("welcome", {
         layout: "main",
     });
+
+    // if (!req.cookies.signed) {
+    //     res.redirect("/welcome");
+    // }
 });
 //
 app.post("/welcome", (req, res) => {
@@ -51,11 +55,7 @@ app.post("/welcome", (req, res) => {
 
     res.cookie("signed", "signed");
 
-    if (!req.cookies.signed) {
-        res.redirect("/welcome");
-    } else {
-        res.redirect("/thankyou");
-    }
+    res.redirect("/thankyou");
 });
 
 app.get("/thankyou", (req, res) => {
@@ -89,7 +89,7 @@ app.get("/signatories", (req, res) => {
             for (let i = 0; i < results.length; i++) {
                 let item = results[i];
 
-                list.push(`${item.first_name} ${item.last_name}`);
+                list.push(` ${item.first_name} ${item.last_name}`);
             }
             console.log("list: ", list);
             return list;
