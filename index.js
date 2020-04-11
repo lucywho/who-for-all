@@ -57,16 +57,24 @@ app.post("/welcome", (req, res) => {
 
 app.get("/thankyou", (req, res) => {
     //TO DO: check for cookie and redirect to welcome if missing
-    res.render("thankyou", {
-        layout: "main",
-    });
+    if (!req.body.cookie) {
+        res.redirect("/welcome");
+    } else {
+        res.render("thankyou", {
+            layout: "main",
+        });
+    }
 });
 
 app.get("/signatories", (req, res) => {
     //TO DO: check for cookie and redirect to welcome if missing
-    res.render("signatories", {
-        layout: "main",
-    });
+    if (!req.body.cookie) {
+        res.redirect("/welcome");
+    } else {
+        res.render("signatories", {
+            layout: "main",
+        });
+    }
 
     db.getNames()
         .then((results) => {
