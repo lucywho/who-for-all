@@ -37,19 +37,21 @@ app.post("/welcome", (req, res) => {
     //check all there
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
-        //TO DO remove class "hidden" from id error-msg and reroute to "/welcome"
-        return; //delete this when above done
+        // TO DO
+        //req.body.error_msg.classList.remove("hidden");
+        console.log("error_msg", req.body.error_msg);
+        res.redirect("/welcome");
     }
 
     db.addName(first_name, last_name, signature)
-        .then(() => {
-            console.log("post worked");
-        })
+        .then(() => {})
         .catch((err) => {
             console.log("err in addName: ", err);
             //reroute to "/welcome" with error message
+            console.log("post worked");
         });
     //TO DO: set cookie when post successful
+    res.cookie("signed");
     res.redirect("/thankyou");
 });
 
@@ -76,7 +78,7 @@ app.get("/signatories", (req, res) => {
             }
             console.log("list: ", list);
             //TO DO: work out how to return this to the signatories-list div
-            //res.end(list);
+            res.end("/signatories/#signatories-list" + list);
         })
         .catch((err) => {
             console.log("err in getNames: ", err);

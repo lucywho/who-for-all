@@ -1,5 +1,3 @@
-import { text } from "express";
-
 // canvas / signature code goes here
 console.log("javascript attached");
 
@@ -20,6 +18,7 @@ document.getElementById("canvas").addEventListener("mousemove", drawSignature);
 
 //work out new position
 function newPosition(event) {
+    console.log("mousedown detected");
     //TODO: work out how to remove offset
     position.x = event.pageX;
     position.y = event.pageY;
@@ -27,6 +26,7 @@ function newPosition(event) {
 
 //draw lines
 function drawSignature(event) {
+    console.log("mousemove detected");
     if (event.buttons !== 1) {
         return;
     }
@@ -43,4 +43,5 @@ function drawSignature(event) {
 //save canvas image to save-sig field
 let canvas = document.getElementById("canvas");
 let signature = canvas.toDataURL();
-document.getElementById("save-sig").appendChild(signature);
+console.log(signature);
+//document.getElementById("save-sig").innerHTML(`${signature}`); DOESN'T WORK
