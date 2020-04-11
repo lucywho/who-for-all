@@ -23,3 +23,14 @@ module.exports.addName = (first_name, last_name, signature) => {
         [first_name, last_name, signature] //same variables as arguments
     );
 };
+
+module.exports.sigTotal = () => {
+    return db
+        .query(`SELECT * FROM signatures`)
+        .then((results) => {
+            return results.rowCount;
+        })
+        .catch((err) => {
+            console.log("err", err);
+        });
+};

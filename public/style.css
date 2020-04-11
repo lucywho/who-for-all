@@ -102,4 +102,6 @@ input:focus {
     width: 300px;
     min-height: 50px;
     max-height: fit-content;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
 }

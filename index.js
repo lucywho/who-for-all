@@ -35,57 +35,74 @@ app.post("/welcome", (req, res) => {
     //check all there
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
-        // TO DO
-
-        //req.body.error_msg.classList.remove("hidden");
+        // TO DO: remove hidden class from #error_msg
         console.log("error_msg", req.body.error_msg);
-        //res.redirect("/welcome");
+        res.redirect("/welcome");
     }
 
     db.addName(first_name, last_name, signature)
-        .then(() => {})
+        .then(() => {
+            console.log("post worked");
+        })
         .catch((err) => {
             console.log("err in addName: ", err);
-            //reroute to "/welcome" with error message
-            console.log("post worked");
+            //TO DO: reroute to "/welcome" with error message
         });
-    //TO DO: set cookie when post successful
+
     res.cookie("signed", "signed");
-    res.redirect("/thankyou");
+
+    if (!req.cookies.signed) {
+        res.redirect("/welcome");
+    } else {
+        res.redirect("/thankyou");
+    }
 });
 
 app.get("/thankyou", (req, res) => {
-    //TO DO: check for cookie and redirect to welcome if missing
-    if (req.body.cookie !== "signed") {
-        res.redirect("/welcome");
-    } else {
-        res.render("thankyou", {
-            layout: "main",
+    db.sigTotal()
+        .then((results) => {
+            let sigTotal = results;
+            console.log("sig total: ", sigTotal);
+            return sigTotal; //TO DO: insert into thankyou page
+        })
+        .then((sigTotal) => {
+            if (!req.cookies.signed) {
+                res.redirect("/welcome");
+            } else {
+                res.render("thankyou", {
+                    layout: "main",
+                    sigTotal: sigTotal,
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("err in addName: ", err);
+            //TO DO: reroute to "/welcome" with error message
         });
-    }
 });
 
 app.get("/signatories", (req, res) => {
-    //TO DO: check for cookie and redirect to welcome if missing
-    if (req.body.cookie !== "signed") {
-        res.redirect("/welcome");
-    } else {
-        res.render("signatories", {
-            layout: "main",
-        });
-    }
-
     db.getNames()
         .then((results) => {
-            let list = "";
+            let list = [];
 
             for (let i = 0; i < results.length; i++) {
                 let item = results[i];
-                list += item.first_name + " " + item.last_name + "<br>";
+
+                list.push(`${item.first_name} ${item.last_name}`);
             }
             console.log("list: ", list);
-            //TO DO: work out how to return this to the signatories-list div
-            //res.end("/signatories/#signatories-list" + list);
+            return list;
+        })
+        .then((list) => {
+            if (!req.cookies.signed) {
+                res.redirect("/welcome");
+            } else {
+                res.render("signatories", {
+                    layout: "main",
+                    signatories: list,
+                });
+            }
         })
         .catch((err) => {
             console.log("err in getNames: ", err);
