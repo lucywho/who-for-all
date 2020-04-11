@@ -21,15 +21,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/welcome", (req, res) => {
-    res.render("welcome", {
-        layout: "main",
-    });
-
-    // if (!req.cookies.signed) {
-    //     res.redirect("/welcome");
-    // }
+    if (req.cookies.signed) {
+        res.redirect("/thankyou");
+    } else {
+        res.render("welcome", {
+            layout: "main",
+        });
+    }
 });
-//
+
 app.post("/welcome", (req, res) => {
     //capture inputs
     const first_name = req.body.first_name;
@@ -39,9 +39,8 @@ app.post("/welcome", (req, res) => {
     //check all there
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
-        // TO DO: remove hidden class from #error_msg
-        console.log("error_msg", req.body.error_msg);
         res.redirect("/welcome");
+        //TO DO: work out how to render an error message on welcome
     }
 
     db.addName(first_name, last_name, signature)
@@ -63,7 +62,7 @@ app.get("/thankyou", (req, res) => {
         .then((results) => {
             let sigTotal = results;
             console.log("sig total: ", sigTotal);
-            return sigTotal; //TO DO: insert into thankyou page
+            return sigTotal;
         })
         .then((sigTotal) => {
             if (!req.cookies.signed) {

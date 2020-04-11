@@ -1,6 +1,6 @@
 <div id="welcome-container">
     <h1 id="h1welcome">Welcome to my petition to have Doctor Who shown on all terrestrial TV stations world-wide</h1>
-    <input id="error-msg" class="hidden" name="error_msg">Sorry, there was a disturbance in the spacetime continuum, please reverse the polarity of the neutron flow and try again</input>
+    <div id="error_msg">{{wentWrong}}</div>
 
 <form action="/welcome" method="POST" id="sign-form">
 
@@ -10,7 +10,8 @@
 </div>
 
 <div id="sig-pic">
-    <canvas id="canvas" >
+  <p>Please sign below:</p>
+    <canvas id="canvas">
 
     </canvas>
 </div>
@@ -23,3 +24,4 @@
 
 
 </div>
+<footer id="welcomefoot">Photo by Miriam Espacio from Pexels</footer>

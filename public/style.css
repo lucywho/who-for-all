@@ -8,11 +8,18 @@
     background-image: url(../darkbluegalaxy.jpg);
     background-color: blue;
     background-size: cover;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 #h1welcome {
     color: lightblue;
-    font-family: Arial, Helvetica, sans-serif;
+}
+
+#error-msg {
+    height: auto;
+    color: yellow;
+    font-style: italic;
 }
 
 .hidden {
@@ -24,7 +31,7 @@ input {
     height: 50px;
     background-color: lightyellow;
     border: blue solid 2px;
-    margin: 5px;
+    margin: 5px 0;
     font-size: 30px;
     color: blue;
 }
@@ -32,6 +39,14 @@ input:focus {
     background-color: rgb(252, 252, 178);
     border: rgb(31, 31, 250) solid 2px;
     outline: none;
+}
+
+p {
+    color: lightblue;
+    font-size: 20px;
+    margin: 0 0 0 5px;
+    font-style: italic;
+    font-weight: bold;
 }
 
 #canvas {
@@ -45,7 +60,7 @@ input:focus {
 #submit {
     width: 300px;
     height: 50px;
-    background-color: lightyellow;
+    background-color: peachpuff;
     border: blue solid 2px;
     margin: 5px;
     font-size: 30px;
@@ -57,10 +72,11 @@ input:focus {
     background-color: rgb(252, 252, 178);
 }
 
-#error-msg {
-    color: yellow;
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: italic;
+#welcomefoot {
+    color: lightblue;
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
 }
 
 /* thank you page */
@@ -69,6 +85,7 @@ input:focus {
     background-image: url(../greenaurora.jpg);
     background-color: green;
     background-size: cover;
+    position: relative;
 }
 
 #h1thankyou {
@@ -81,12 +98,20 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+#thankyoufoot {
+    color: paleturquoise;
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
+}
+
 /* signatories page */
 #signatories-container {
     min-height: 100vh;
     background-image: url(../pinkstarrysky.jpg);
     background-color: pink;
     background-size: cover;
+    position: relative;
 }
 
 #h1signatories {
@@ -104,4 +129,11 @@ input:focus {
     max-height: fit-content;
     font-size: 20px;
     font-family: Arial, Helvetica, sans-serif;
+}
+
+#signatoriesfoot {
+    color: rgb(250, 207, 213);
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
 }
