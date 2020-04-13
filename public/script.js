@@ -3,6 +3,8 @@ console.log("javascript attached");
 
 let context = document.getElementById("canvas").getContext("2d");
 
+let canvas = document.getElementById("canvas");
+
 //starting position
 let position = {
     x: 0,
@@ -10,28 +12,28 @@ let position = {
 };
 
 //event listeners
-document.getElementById("canvas").addEventListener("mousedown", newPosition);
+canvas.addEventListener("mousedown", newPosition);
 
-document.getElementById("canvas").addEventListener("mouseenter", newPosition);
+canvas.addEventListener("mouseenter", newPosition);
 
-document.getElementById("canvas").addEventListener("mousemove", drawSignature);
+canvas.addEventListener("mousemove", drawSignature);
+
+canvas.addEventListener("mouseup", saveSignature);
 
 //work out new position
 function newPosition(event) {
-    console.log("mousedown detected");
     //TODO: work out how to remove offset
-    position.x = event.pageX;
-    position.y = event.pageY;
+    position.x = event.clientX;
+    position.y = event.clientY;
+    console.log("x, y: ", position.x, position.y);
 }
 
 //draw lines
 function drawSignature(event) {
-    console.log("mousemove detected");
     if (event.buttons !== 1) {
         return;
     }
 
-    context.beginPath();
     context.strokeStyle = "blue";
 
     context.moveTo(position.x, position.y);
@@ -41,6 +43,8 @@ function drawSignature(event) {
 }
 
 //save canvas image to save-sig field
-let canvas = document.getElementById("canvas");
-let signature = canvas.toDataURL();
-console.log(signature);
+function saveSignature() {
+    let signature = canvas.toDataURL();
+    document.getElementById("save-sig").innerHTML = signature;
+    return signature;
+}

@@ -2,138 +2,219 @@
     margin: 0;
     padding: 0;
 }
+h1 {
+    font-size: 25px;
+}
+h2 {
+    font-size: 20px;
+}
 /* welcome page */
 #welcome-container {
     min-height: 100vh;
     background-image: url(../darkbluegalaxy.jpg);
-    background-color: blue;
+    background-color: rgb(9, 5, 46);
     background-size: cover;
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #h1welcome {
-    color: lightblue;
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
 }
 
-#error-msg {
+#welcomequote {
+    color: rgb(213, 220, 242);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 5px;
+}
+
+.error_msg {
+    position: relative;
     height: auto;
     color: yellow;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
     font-style: italic;
+    font-size: 25px;
+    margin: 10px 0 0 0;
 }
 
 .hidden {
     display: none;
 }
 
+#sign-form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 input {
     width: 300px;
     height: 50px;
-    background-color: lightyellow;
-    border: blue solid 2px;
+    background-color: rgb(213, 220, 242);
+    border: rgb(51, 35, 113) solid 2px;
     margin: 5px 0;
     font-size: 30px;
-    color: blue;
+    color: rgb(27, 40, 49);
 }
 input:focus {
-    background-color: rgb(252, 252, 178);
-    border: rgb(31, 31, 250) solid 2px;
+    background-color: rgb(198, 197, 245);
+    border: rgb(51, 35, 113) solid 2px;
     outline: none;
 }
 
-p {
-    color: lightblue;
-    font-size: 20px;
+#plssgn {
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    font-size: 25px;
     margin: 0 0 0 5px;
     font-style: italic;
     font-weight: bold;
 }
 
 #canvas {
-    width: 500px;
+    width: 100%;
     height: 150px;
-    border: blue solid 2px;
-    background-color: lightyellow;
-    margin: 5px;
+    border: rgb(51, 35, 113) solid 2px;
+    background-color: rgb(213, 220, 242);
+    margin: 5px 0 0 0;
 }
 
 #submit {
     width: 300px;
     height: 50px;
-    background-color: peachpuff;
-    border: blue solid 2px;
-    margin: 5px;
+    background-color: rgb(221, 176, 204);
+    border: rgb(51, 35, 113) solid 2px;
+    margin: 5px 0 0 0;
     font-size: 30px;
-    color: blue;
+    color: rgb(9, 5, 46);
 }
 
 #submit:focus {
     outline: lightskyblue;
-    background-color: rgb(252, 252, 178);
+    background-color: rgb(198, 197, 245);
 }
 
 #welcomefoot {
     color: lightblue;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;
-    bottom: 10px;
+    bottom: 0;
     left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* thank you page */
 #thankyou-container {
     min-height: 100vh;
     background-image: url(../greenaurora.jpg);
-    background-color: green;
+    background-color: rgb(40, 101, 103);
     background-size: cover;
     position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #h1thankyou {
-    color: lightgreen;
-    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(164, 217, 231);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 0 30px;
+}
+
+#tyquote {
+    color: rgb(164, 217, 231);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 0;
 }
 
 #h2thankyou {
-    color: limegreen;
-    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(165, 215, 231);
+    text-align: center;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    margin: 30px 30px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover #h2thankyou {
+    opacity: 90%;
+    color: rgb(198, 197, 245);
 }
 
 #thankyoufoot {
     color: paleturquoise;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;
-    bottom: 10px;
+    bottom: 0;
     left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 /* signatories page */
 #signatories-container {
     min-height: 100vh;
     background-image: url(../pinkstarrysky.jpg);
-    background-color: pink;
+    background-color: rgb(73, 51, 75);
     background-size: cover;
     position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #h1signatories {
-    color: lightpink;
-    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(245, 211, 232);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+
+#sigquote {
+    color: rgb(245, 211, 232);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 0;
 }
 
 #signatories-list {
     margin: 20px 0;
-    color: rebeccapurple;
-    background-color: lightpink;
-    border: 5px solid rebeccapurple;
+    color: rgb(33, 20, 39);
+    background-color: rgb(245, 211, 232);
+    border: 5px solid rgb(134, 98, 125);
     width: 300px;
     min-height: 50px;
     max-height: fit-content;
     font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
 }
 
 #signatoriesfoot {
     color: rgb(250, 207, 213);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;
-    bottom: 10px;
+    bottom: 0;
     left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
 }

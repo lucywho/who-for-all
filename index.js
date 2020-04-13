@@ -34,13 +34,19 @@ app.post("/welcome", (req, res) => {
     //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
-    const signature = "sig placeholder";
+    const signature = "req.body.signature";
 
     //check all there
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
-        res.redirect("/welcome");
-        //TO DO: work out how to render an error message on welcome
+
+        let wentWrong =
+            "Please reverse the polarity of the neutron flow and try again";
+        res.render("welcome", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
     }
 
     db.addName(first_name, last_name, signature)
@@ -49,7 +55,13 @@ app.post("/welcome", (req, res) => {
         })
         .catch((err) => {
             console.log("err in addName: ", err);
-            //TO DO: reroute to "/welcome" with error message
+            let wentWrong =
+                "Block transfer computation failure, please try again";
+            res.render("welcome", {
+                layout: "main",
+                wentWrong: wentWrong,
+            });
+            return;
         });
 
     res.cookie("signed", "signed");
@@ -75,8 +87,14 @@ app.get("/thankyou", (req, res) => {
             }
         })
         .catch((err) => {
-            console.log("err in addName: ", err);
-            //TO DO: reroute to "/welcome" with error message
+            console.log("err in sigTotal: ", err);
+            let wentWrong =
+                "Check the conceptual geometer and refresh the page";
+            res.render("thankyou", {
+                layout: "main",
+                wentWrong: wentWrong,
+            });
+            return;
         });
 });
 
@@ -105,6 +123,14 @@ app.get("/signatories", (req, res) => {
         })
         .catch((err) => {
             console.log("err in getNames: ", err);
+            let wentWrong =
+                "There’s something that doesn’t make sense. Let’s go and poke it with a stick.";
+            res.render("signatories", {
+                layout: "main",
+                signatories: list,
+                wentWrong: wentWrong,
+            });
+            return;
         });
 });
 
