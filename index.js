@@ -36,6 +36,8 @@ app.post("/welcome", (req, res) => {
     const last_name = req.body.last_name;
     const signature = "req.body.signature";
 
+    console.log("first, last,  sig: ", first_name, last_name, signature);
+
     //check all there
     if (!req.body.first_name || !req.body.last_name || !signature) {
         console.log("missing inputs");
@@ -109,6 +111,7 @@ app.get("/signatories", (req, res) => {
                 list.push(` ${item.first_name} ${item.last_name}`);
             }
             console.log("list: ", list);
+
             return list;
         })
         .then((list) => {

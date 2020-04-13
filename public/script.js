@@ -44,7 +44,6 @@ function drawSignature(event) {
 
 //save canvas image to save-sig field
 function saveSignature() {
-    let signature = canvas.toDataURL();
-    document.getElementById("save-sig").innerHTML = signature;
-    return signature;
+    let sig = canvas.toDataURL();
+    document.getElementById("save_sig").val(sig);
 }

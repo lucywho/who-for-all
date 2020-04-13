@@ -50,7 +50,7 @@ h2 {
     display: none;
 }
 
-#sign-form {
+#sign_form {
     position: relative;
     display: flex;
     flex-direction: column;
