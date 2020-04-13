@@ -34,7 +34,7 @@ app.post("/welcome", (req, res) => {
     //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
-    const signature = "req.body.signature";
+    const signature = req.body.signature;
 
     console.log("first, last,  sig: ", first_name, last_name, signature);
 

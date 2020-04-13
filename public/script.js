@@ -1,9 +1,9 @@
 // canvas / signature code goes here
 console.log("javascript attached");
 
-let context = document.getElementById("canvas").getContext("2d");
-
 let canvas = document.getElementById("canvas");
+
+let context = canvas.getContext("2d");
 
 //starting position
 let position = {
@@ -12,7 +12,6 @@ let position = {
 };
 
 //event listeners
-canvas.addEventListener("mousedown", newPosition);
 
 canvas.addEventListener("mouseenter", newPosition);
 
@@ -44,6 +43,12 @@ function drawSignature(event) {
 
 //save canvas image to save-sig field
 function saveSignature() {
-    let sig = canvas.toDataURL();
-    document.getElementById("save_sig").val(sig);
+    let data = canvas.toDataURL();
+    let save_sig = document.getElementsByClassName("hidden");
+
+    save_sig.val = data;
+
+    let signature = save_sig.val;
+    console.log("signature: ", signature); //returns a data:image/png value
+    return signature;
 }
