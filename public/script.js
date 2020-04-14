@@ -9,7 +9,7 @@ let bound = canvas.getBoundingClientRect();
 
 let data = canvas.toDataURL();
 
-let save_sig = document.getElementById("save_sig");
+let save_sig = document.getElementsByClassName("hidden");
 
 //starting position
 let position = {
@@ -48,11 +48,9 @@ function drawSignature(event) {
 
 //save canvas image to save-sig field
 function saveSignature() {
-    // save_sig.val = data;
+    save_sig.val = data;
 
-    // let signature = save_sig.val;
-
-    let signature = save_sig.innerHTML.data;
+    let signature = save_sig.val;
 
     console.log("signature: ", signature); //returns a data:image/png value
     //return signature;

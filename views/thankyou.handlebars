@@ -1,6 +1,9 @@
 <div id="thankyou-container">
-    <h1 id="h1thankyou">Thank you for signing the petition to make Doctor Who available on every broadcast channel</h1>
+    {{!-- add fist name to thankyou message --}}
+    <h1 id="h1thankyou">Thank you {{first_name}} for signing the petition to make Doctor Who available on every broadcast channel</h1>
 
+    {{!-- set image tag with signature url in thankyou.hb template --}}
+<img src="`{{signature}}"></img>
 
 
     <a href="/signatories">

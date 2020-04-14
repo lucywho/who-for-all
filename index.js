@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser");
 
 app.use(
     express.urlencoded({
-        extended: false,
+        extended: false
     })
 );
 
@@ -15,6 +15,7 @@ app.use(cookieParser());
 app.engine("handlebars", handlebars());
 app.set("view engine", "handlebars");
 
+//routes
 app.get("/", (req, res) => {
     console.log("get request to / route succeeded");
     res.redirect("/welcome");
@@ -25,7 +26,7 @@ app.get("/welcome", (req, res) => {
         res.redirect("/thankyou");
     } else {
         res.render("welcome", {
-            layout: "main",
+            layout: "main"
         });
     }
 });
@@ -46,7 +47,7 @@ app.post("/welcome", (req, res) => {
             "Please reverse the polarity of the neutron flow and try again";
         res.render("welcome", {
             layout: "main",
-            wentWrong: wentWrong,
+            wentWrong: wentWrong
         });
         return;
     }
@@ -55,13 +56,13 @@ app.post("/welcome", (req, res) => {
         .then(() => {
             console.log("post worked");
         })
-        .catch((err) => {
+        .catch(err => {
             console.log("err in addName: ", err);
             let wentWrong =
                 "Block transfer computation failure, please try again";
             res.render("welcome", {
                 layout: "main",
-                wentWrong: wentWrong,
+                wentWrong: wentWrong
             });
             return;
         });
@@ -73,28 +74,28 @@ app.post("/welcome", (req, res) => {
 
 app.get("/thankyou", (req, res) => {
     db.sigTotal()
-        .then((results) => {
+        .then(results => {
             let sigTotal = results;
             console.log("sig total: ", sigTotal);
             return sigTotal;
         })
-        .then((sigTotal) => {
+        .then(sigTotal => {
             if (!req.cookies.signed) {
                 res.redirect("/welcome");
             } else {
                 res.render("thankyou", {
                     layout: "main",
-                    sigTotal: sigTotal,
+                    sigTotal: sigTotal
                 });
             }
         })
-        .catch((err) => {
+        .catch(err => {
             console.log("err in sigTotal: ", err);
             let wentWrong =
                 "Check the conceptual geometer and refresh the page";
             res.render("thankyou", {
                 layout: "main",
-                wentWrong: wentWrong,
+                wentWrong: wentWrong
             });
             return;
         });
@@ -102,7 +103,7 @@ app.get("/thankyou", (req, res) => {
 
 app.get("/signatories", (req, res) => {
     db.getNames()
-        .then((results) => {
+        .then(results => {
             let list = [];
 
             for (let i = 0; i < results.length; i++) {
@@ -114,24 +115,24 @@ app.get("/signatories", (req, res) => {
 
             return list;
         })
-        .then((list) => {
+        .then(list => {
             if (!req.cookies.signed) {
                 res.redirect("/welcome");
             } else {
                 res.render("signatories", {
                     layout: "main",
-                    signatories: list,
+                    signatories: list
                 });
             }
         })
-        .catch((err) => {
+        .catch(err => {
             console.log("err in getNames: ", err);
             let wentWrong =
                 "There’s something that doesn’t make sense. Let’s go and poke it with a stick.";
             res.render("signatories", {
                 layout: "main",
                 signatories: list,
-                wentWrong: wentWrong,
+                wentWrong: wentWrong
             });
             return;
         });
