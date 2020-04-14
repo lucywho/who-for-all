@@ -19,14 +19,11 @@ module.exports.addName = (first_name, last_name, signature) => {
     return db.query(
         `
     INSERT INTO signatures (first_name, last_name, signature)
-    VALUES($1, $2, $3)`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
+    VALUES($1, $2, $3) RETURNING first_name, signature, id`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
         [first_name, last_name, signature] //same variables as arguments
     );
 };
-
-//query below returns only the first name and signature
-//INSERT INTO signatures (first_name, last_name, signature) VALUES($1, $2, $3) RETURNING firstname, signature`
-//so .then block will only treat first name and signature as results
+//so .then block will only treat first name, signature and id as results
 
 module.exports.sigTotal = () => {
     return db

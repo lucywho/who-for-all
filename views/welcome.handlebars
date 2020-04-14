@@ -5,9 +5,11 @@
   <form action="/welcome" method="POST" id="sign_form">
 
     <div id="input_name">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <p><input name="first_name" placeholder="First name..." ></p>
       <p><input name="last_name" placeholder="Last name..." ></p>
     <p><input name="signature" id="save_sig" class="hidden"></p>
+    
     </div>
 
     <div id="sig_pic">
