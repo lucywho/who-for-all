@@ -7,10 +7,6 @@ let context = canvas.getContext("2d");
 
 let bound = canvas.getBoundingClientRect();
 
-let data = canvas.toDataURL();
-
-let save_sig = document.getElementsByClassName("hidden");
-
 //starting position
 let position = {
     x: 0,
@@ -48,9 +44,13 @@ function drawSignature(event) {
 
 //save canvas image to save-sig field
 function saveSignature() {
-    save_sig.val = data;
+    let data = canvas.toDataURL();
 
-    let signature = save_sig.val;
+    let save_sig = document.getElementById("save_sig");
+
+    save_sig.value = data;
+
+    let signature = save_sig.value;
 
     console.log("signature: ", signature); //returns a data:image/png value
     //return signature;

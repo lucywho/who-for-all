@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const db = require("./db.js");
 const handlebars = require("express-handlebars");
-const cookieParser = require("cookie-parser");
+const cookieParser = require("cookie-parser"); //cookie session
 
 app.use(
     express.urlencoded({
@@ -10,7 +10,7 @@ app.use(
     })
 );
 
-app.use(cookieParser());
+app.use(cookieParser()); //cookie session
 
 app.engine("handlebars", handlebars());
 app.set("view engine", "handlebars");
@@ -23,6 +23,7 @@ app.get("/", (req, res) => {
 
 app.get("/welcome", (req, res) => {
     if (req.cookies.signed) {
+        //cookie session
         res.redirect("/thankyou");
     } else {
         res.render("welcome", {
@@ -40,7 +41,7 @@ app.post("/welcome", (req, res) => {
     console.log("first, last,  sig: ", first_name, last_name, signature);
 
     //check all there
-    if (!req.body.first_name || !req.body.last_name || !signature) {
+    if (!first_name || !last_name || !signature) {
         console.log("missing inputs");
 
         let wentWrong =
@@ -55,6 +56,7 @@ app.post("/welcome", (req, res) => {
     db.addName(first_name, last_name, signature)
         .then(() => {
             console.log("post worked");
+            //save returned id here?
         })
         .catch(err => {
             console.log("err in addName: ", err);
@@ -67,7 +69,7 @@ app.post("/welcome", (req, res) => {
             return;
         });
 
-    res.cookie("signed", "signed");
+    res.cookie("signed", "signed"); //cookie session
 
     res.redirect("/thankyou");
 });
@@ -81,6 +83,7 @@ app.get("/thankyou", (req, res) => {
         })
         .then(sigTotal => {
             if (!req.cookies.signed) {
+                //cookie session
                 res.redirect("/welcome");
             } else {
                 res.render("thankyou", {
@@ -117,6 +120,7 @@ app.get("/signatories", (req, res) => {
         })
         .then(list => {
             if (!req.cookies.signed) {
+                //cookie session
                 res.redirect("/welcome");
             } else {
                 res.render("signatories", {
