@@ -7,6 +7,10 @@ let context = canvas.getContext("2d");
 
 let bound = canvas.getBoundingClientRect();
 
+let data = canvas.toDataURL();
+
+let save_sig = document.getElementById("save_sig");
+
 //starting position
 let position = {
     x: 0,
@@ -23,11 +27,9 @@ canvas.addEventListener("mouseup", saveSignature);
 
 //work out new position
 function newPosition(event) {
-    //TODO: work out how to remove offset
-
     position.x = event.clientX - bound.left;
     position.y = event.clientY - bound.top;
-    console.log("x, y: ", position.x, position.y);
+    //console.log("x, y: ", position.x, position.y);
 }
 
 //draw lines
@@ -46,12 +48,12 @@ function drawSignature(event) {
 
 //save canvas image to save-sig field
 function saveSignature() {
-    let data = canvas.toDataURL();
-    let save_sig = document.getElementsByClassName("hidden");
+    // save_sig.val = data;
 
-    save_sig.val = data;
+    // let signature = save_sig.val;
 
-    let signature = save_sig.val;
+    let signature = save_sig.innerHTML.data;
+
     console.log("signature: ", signature); //returns a data:image/png value
-    return signature;
+    //return signature;
 }
