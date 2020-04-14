@@ -5,10 +5,12 @@ let canvas = document.getElementById("canvas");
 
 let context = canvas.getContext("2d");
 
+let bound = canvas.getBoundingClientRect();
+
 //starting position
 let position = {
     x: 0,
-    y: 0,
+    y: 0
 };
 
 //event listeners
@@ -22,8 +24,9 @@ canvas.addEventListener("mouseup", saveSignature);
 //work out new position
 function newPosition(event) {
     //TODO: work out how to remove offset
-    position.x = event.clientX;
-    position.y = event.clientY;
+
+    position.x = event.clientX - bound.left;
+    position.y = event.clientY - bound.top;
     console.log("x, y: ", position.x, position.y);
 }
 
