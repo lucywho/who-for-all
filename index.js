@@ -40,25 +40,21 @@ app.set("view engine", "handlebars");
 
 //==routes
 app.get("/", (req, res) => {
-    req.session.joined = "new session";
-    req.session.signed = "";
+    //req.session.joined = "new session";
     //console.log("get request to / route succeeded");
+    req.session.signatureId = "";
     res.redirect("/welcome");
 });
 
 app.get("/welcome", (req, res) => {
-    const { joined, signed } = req.session;
-
-    if (joined !== "new session") {
-        console.log("error in new session");
-        res.redirect("/");
-    } else if (signed === "signed") {
-        res.redirect("/thankyou");
-    } else {
-        res.render("welcome", {
-            layout: "main"
-        });
-    }
+    // if (req.session.signatureId !== "") {
+    //     //just need signature id cookie
+    //     res.redirect("/thankyou");
+    // } else {
+    // }
+    res.render("welcome", {
+        layout: "main"
+    });
 });
 
 app.post("/welcome", (req, res) => {
@@ -83,10 +79,9 @@ app.post("/welcome", (req, res) => {
     db.addName(first_name, last_name, signature)
         .then(results => {
             console.log("post worked");
-            req.session.signed = "signed";
-            console.log("addName results: ", results);
             let id = results.rows[0].id;
             req.session.signatureId = id;
+            console.log("req.session.signatureId: ", req.session.signatureId); //returning id number
         })
         .catch(err => {
             console.log("err in addName: ", err);
@@ -112,11 +107,8 @@ app.get("/thankyou", (req, res) => {
             return sigTotal;
         })
         .then(sigTotal => {
-            if (
-                req.session.signed !== "signed" ||
-                req.session.joined !== "new session"
-            ) {
-                res.redirect("/");
+            if (req.session.signatureId == "") {
+                res.redirect("/welcome");
             } else {
                 res.render("thankyou", {
                     layout: "main",
@@ -151,11 +143,8 @@ app.get("/signatories", (req, res) => {
             return list;
         })
         .then(list => {
-            if (
-                req.session.signed !== "signed" ||
-                req.session.joined !== "new session"
-            ) {
-                res.redirect("/");
+            if (req.session.signatureId == "") {
+                res.redirect("/welcome");
             } else {
                 res.render("signatories", {
                     layout: "main",
