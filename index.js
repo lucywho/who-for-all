@@ -113,8 +113,8 @@ app.get("/thankyou", (req, res) => {
         })
         .then(sigTotal => {
             if (
-                req.cookies.signed !== "signed" ||
-                req.cookies.joined !== "new session"
+                req.session.signed !== "signed" ||
+                req.session.joined !== "new session"
             ) {
                 res.redirect("/");
             } else {
@@ -152,8 +152,8 @@ app.get("/signatories", (req, res) => {
         })
         .then(list => {
             if (
-                req.cookies.signed !== "signed" ||
-                req.cookies.joined !== "new session"
+                req.session.signed !== "signed" ||
+                req.session.joined !== "new session"
             ) {
                 res.redirect("/");
             } else {
