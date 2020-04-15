@@ -73,8 +73,8 @@ app.post("/register", (req, res) => {
         });
         return;
     }
-    // hash the password
 
+    // hash the password
     hash(password)
         .then((hashpass) => {
             console.log("hashpass worked", hashpass);
