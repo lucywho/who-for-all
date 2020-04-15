@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 
 app.get("/welcome", (req, res) => {
     if (!req.session) {
-        res.redirect("/"); //TO DO: doesn't redirect if no cookie
+        res.redirect("/");
         return;
     }
     res.render("welcome", {
@@ -76,8 +76,10 @@ app.post("/welcome", (req, res) => {
         .then((results) => {
             console.log("post worked");
             let id = results.rows[0].id;
+            console.log("id line 79: ", id);
             req.session.signatureId = id;
             console.log("req.session.signatureId: ", req.session.signatureId);
+            res.redirect("/thankyou");
         })
         .catch((err) => {
             console.log("err in addName: ", err);
@@ -89,8 +91,6 @@ app.post("/welcome", (req, res) => {
             });
             return;
         });
-
-    res.redirect("/thankyou");
 });
 
 app.get("/thankyou", (req, res) => {
@@ -98,30 +98,34 @@ app.get("/thankyou", (req, res) => {
         res.redirect("/welcome");
         return;
     }
-
+    console.log("req.session.signatureId line 101: ", req.session.signatureId);
     let sigPic;
     let sigTotal;
     //make db query to get signature from database which matches id stored in cookie session
 
     db.sigTotal()
         .then((results) => {
-            sigTotal = results;
+            //console.log("results in sigTotal: ", results);
+            sigTotal = results.rowCount;
             console.log("sig total: ", sigTotal);
             //return sigTotal;
         })
-        .then(
-            db.sigPic().then((results) => {
-                sigPic = results.rows[0].signature;
-                console.log("sigPic:", sigPic);
-                //return sigPic;
-            })
-        )
         .then(() => {
-            res.render("thankyou", {
-                layout: "main",
-                sigTotal: sigTotal,
-                sigPic: sigPic,
-            });
+            db.sigPic(req.session.signatureId)
+                .then((results) => {
+                    //console.log("results in sigPic: ", results);
+                    sigPic = results.rows[0].signature;
+                    //console.log("sigPic:", sigPic);
+                    res.render("thankyou", {
+                        layout: "main",
+                        sigTotal: sigTotal,
+                        sigPic: sigPic,
+                    });
+                    //return sigPic;
+                })
+                .catch((err) => {
+                    console.log("err in sigPic: ", err);
+                });
         })
         .catch((err) => {
             console.log("err in sigTotal: ", err);

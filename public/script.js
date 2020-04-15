@@ -10,7 +10,7 @@ let bound = canvas.getBoundingClientRect();
 //starting position
 let position = {
     x: 0,
-    y: 0
+    y: 0,
 };
 
 //event listeners
@@ -34,7 +34,7 @@ function drawSignature(event) {
         return;
     }
 
-    context.strokeStyle = "blue";
+    context.strokeStyle = "navy";
 
     context.moveTo(position.x, position.y);
     newPosition(event);

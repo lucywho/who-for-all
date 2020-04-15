@@ -26,14 +26,7 @@ module.exports.addName = (first_name, last_name, signature) => {
 //so .then block will only treat first name, signature and id as results
 
 module.exports.sigTotal = () => {
-    return db
-        .query(`SELECT * FROM signatures`)
-        .then((results) => {
-            return results.rowCount;
-        })
-        .catch((err) => {
-            console.log("err sigTotal db", err);
-        });
+    return db.query(`SELECT * FROM signatures`);
 };
 
 module.exports.sigPic = (id) => {
