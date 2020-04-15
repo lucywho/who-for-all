@@ -8,8 +8,9 @@ h1 {
 h2 {
     font-size: 20px;
 }
-/* welcome page */
-#welcome-container {
+
+/* register page */
+#register-container {
     min-height: 100vh;
     background-image: url(../darkbluegalaxy.jpg);
     background-color: rgb(9, 5, 46);
@@ -22,40 +23,40 @@ h2 {
     justify-content: space-around;
 }
 
-#h1welcome {
-    color: rgb(213, 220, 242);
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
-    text-align: center;
-}
-
-#welcomequote {
-    color: rgb(213, 220, 242);
-    opacity: 75%;
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
-    text-align: center;
-    margin: 5px 5px;
-}
-
 .error_msg {
     position: relative;
     height: auto;
     color: yellow;
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     font-style: italic;
-    font-size: 25px;
+    font-size: 20px;
     margin: 10px 0 0 0;
+}
+
+#h1register {
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+#h2register {
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+
+#pregister {
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+
+#rega {
+    color: yellow;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
 }
 
 .hidden {
     display: none;
-}
-
-#sign_form {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 input {
@@ -71,6 +72,180 @@ input:focus {
     background-color: rgb(198, 197, 245);
     border: rgb(51, 35, 113) solid 2px;
     outline: none;
+}
+
+#regNow {
+    width: 300px;
+    height: 50px;
+    background-color: rgb(221, 176, 204);
+    border: rgb(51, 35, 113) solid 2px;
+    margin: 5px 0 0 0;
+    font-size: 30px;
+    color: rgb(9, 5, 46);
+}
+
+#regNow:focus {
+    outline: lightskyblue;
+    background-color: rgb(198, 197, 245);
+}
+
+#registerquote {
+    color: rgb(213, 220, 242);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 5px;
+}
+
+#registerfoot {
+    color: lightblue;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* login page */
+#login-container {
+    min-height: 100vh;
+    background-image: url(../orangegalaxy.jpg);
+    background-color: rgb(135, 42, 33);
+    background-size: cover;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.error_msg {
+    position: relative;
+    height: auto;
+    color: yellow;
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    font-style: italic;
+    font-size: 25px;
+    margin: 10px 0 0 0;
+}
+
+#h1login {
+    color: rgb(254, 251, 133);
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    text-align: center;
+}
+#h2login {
+    color: rgb(254, 251, 133);
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    text-align: center;
+}
+#plogin {
+    color: rgb(254, 251, 133);
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+input {
+    width: 300px;
+    height: 50px;
+    background-color: rgb(213, 220, 242);
+    border: rgb(141, 37, 38) solid 2px;
+    margin: 5px 0;
+    font-size: 30px;
+    color: rgb(141, 37, 38);
+}
+input:focus {
+    background-color: rgb(198, 197, 245);
+    border: rgb(141, 37, 38) solid 2px;
+    outline: none;
+}
+
+#loginNow {
+    width: 300px;
+    height: 50px;
+    background-color: rgb(221, 176, 204);
+    border: rgb(51, 35, 113) solid 2px;
+    margin: 5px 0 0 0;
+    font-size: 30px;
+    color: rgb(141, 37, 38);
+}
+
+#loginNow:focus {
+    outline: lightskyblue;
+    background-color: rgb(198, 197, 245);
+}
+
+#loginquote {
+    color: rgb(254, 251, 133);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    text-align: center;
+    margin: 5px 5px;
+}
+
+#loginfoot {
+    color: lightblue;
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+/* sign page */
+#sign-container {
+    min-height: 100vh;
+    background-image: url(../darkgalaxy.jpg);
+    background-color: rgb(9, 5, 46);
+    background-size: cover;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#h1sign {
+    color: rgb(213, 220, 242);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+
+.error_msg {
+    position: relative;
+    height: auto;
+    color: yellow;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    font-style: italic;
+    font-size: 25px;
+    margin: 10px 0 0 0;
+}
+
+#signquote {
+    color: rgb(213, 220, 242);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 5px;
+}
+
+.hidden {
+    display: none;
+}
+
+#sign_form {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 #plssgn {
@@ -90,7 +265,7 @@ input:focus {
     margin: 5px 0 0 0;
 }
 
-#submit {
+#signNow {
     width: 300px;
     height: 50px;
     background-color: rgb(221, 176, 204);
@@ -100,12 +275,12 @@ input:focus {
     color: rgb(9, 5, 46);
 }
 
-#submit:focus {
+#signNow:focus {
     outline: lightskyblue;
     background-color: rgb(198, 197, 245);
 }
 
-#welcomefoot {
+#signfoot {
     color: lightblue;
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;

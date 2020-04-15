@@ -1,0 +1,30 @@
+{{!-- rename this to petition --}}
+<div id="sign-container">
+    <h1 id="h1sign">Please use your mouse to sign in the box below</h1>
+    <div class="error_msg">{{wentWrong}}</div>
+
+  <form action="/sign" method="POST" id="sign_form">
+
+    {{!-- <div id="input_name">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <p><input name="first_name" placeholder="First name..." ></p>
+      <p><input name="last_name" placeholder="Last name..." ></p>
+    <p><input name="signature" id="save_sig" class="hidden"></p>
+    
+    </div> --}}
+
+    <div id="sig_pic">
+       <p id="plssgn">Please sign below:</p>
+    
+      <canvas id="canvas">
+      </canvas>
+    </div>
+
+    <button id="signNow">Sign the Petition</button>
+
+  </form>
+<h2 id="signquote">"** sign.handlebars: new quote here **."</h2>
+</div>
+
+
+<footer id="signfoot">Photo by Pixabay from Pexels</footer>

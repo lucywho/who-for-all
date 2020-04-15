@@ -1,6 +1,12 @@
 <div id="register-container">
     <h1 id="h1register">Welcome to my petition to have Doctor Who shown on all TV channels world-wide</h1>
-    <div class="error_msg">{{wentWrong}}</div>
+    <h2 id="h2register">Doctor Who is the Greatest Show on Earth!</h2>
+    <p id="pregister">And yet it is sadly and inexplicably available only to viewers of the BBC in the UK, and a small number of streaming and cable services elsewhere. Clearly a programme of such cultural, historical, and even moral importance should be available to all the peoples of earth.<br>
+    This petition seeks to right this wrong and ensure that Doctor Who is broadcast on every television channel in the world.<br>
+    Please register below to sign the petition.</p>
+    <h2 id="h2register">Already registered? <a id="rega" href="/login"> Click here</a> to login</h2>
+
+        <div class="error_msg">{{wentWrong}}</div>
 
   <form action="/register" method="POST" id="register">
 
@@ -8,17 +14,19 @@
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
       <p><input name="first_name" placeholder="First name..." ></p>
       <p><input name="last_name" placeholder="Last name..." ></p>
+      <p><input name="email" placeholder="email address..." ></p>
+      <p><input name="password" placeholder="choose a password..." ></p>
     
     
     </div>
 
     
 
-    <button id="submit">xxx</button>
+    <button id="regNow">Register Now</button>
 
   </form>
 <h2 id="registerquote">"One day I shall come back. Yes, I shall come back. Until then, there must be no regrets, no tears, no anxieties. Just go forward in all your beliefs and prove to me that I am not mistaken in mine."</h2>
 </div>
 
 
-<footer id="welcomefoot">Photo by Pixabay from Pexels</footer>
+<footer id="welcomefoot">Photo by Miriam Espacio from Pexels</footer>

@@ -40,52 +40,62 @@ app.use((req, res, next) => {
 
 //==routes
 app.get("/", (req, res) => {
-    res.redirect("/welcome");
+    res.redirect("/register");
 });
 
-app.get("/welcome", (req, res) => {
+app.get("/register", (req, res) => {
     if (!req.session) {
         res.redirect("/");
         return;
     }
-    res.render("welcome", {
+    res.render("register", {
         layout: "main",
     });
 });
 
-app.post("/welcome", (req, res) => {
+app.post("/register", (req, res) => {
     //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
-    const signature = req.body.signature;
+    const email = req.body.email;
+    const password = req.body.password;
+    let hashpass;
 
-    //check all there
-    if (!first_name || !last_name || !signature) {
+    //check all inputs and redo page if not
+    if (!first_name || !last_name || !email || !password) {
         console.log("missing inputs");
 
         let wentWrong =
             "Please reverse the polarity of the neutron flow and try again";
-        res.render("welcome", {
+        res.render("register", {
             layout: "main",
             wentWrong: wentWrong,
         });
         return;
     }
+    // hash the password
 
-    db.addName(first_name, last_name, signature)
+    hash(password)
+        .then((hashpass) => {
+            console.log("hashpass worked", hashpass);
+        })
+        .catch((err) => {
+            console.log("error in hashpass: ", err);
+        });
+
+    //add inputs to user table
+    db.addName(first_name, last_name, email, hashpass)
         .then((results) => {
             console.log("post worked");
-            let id = results.rows[0].id;
-            console.log("id line 79: ", id);
-            req.session.signatureId = id;
-            console.log("req.session.signatureId: ", req.session.signatureId);
-            res.redirect("/thankyou");
+            let user_id = results.rows[0].id;
+            req.session.userId = user_id;
+            res.redirect("/sign");
         })
         .catch((err) => {
             console.log("err in addName: ", err);
             let wentWrong =
                 "Block transfer computation failure, please try again";
-            res.render("welcome", {
+            res.render("register", {
                 layout: "main",
                 wentWrong: wentWrong,
             });
@@ -93,14 +103,53 @@ app.post("/welcome", (req, res) => {
         });
 });
 
-app.get("/thankyou", (req, res) => {
-    if (req.session.signatureId == "") {
-        res.redirect("/welcome");
+app.get("/sign", (req, res) => {
+    if (!req.session.userId) {
+        let wentWrong =
+            "You are not yet registered, please fill out the form below";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
         return;
     }
-    console.log("req.session.signatureId line 101: ", req.session.signatureId);
+});
+
+app.post("/sign", (req, res) => {
+    const signature = req.body.signature;
+
+    if (!signature) {
+        let wentWrong = "Something went wrong. Let's poke it with a stick";
+        res.render("sign", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+    }
+
+    db.addSig(signature)
+        .then(() => {
+            console.log("addsig worked");
+            req.session.signatureId = signature;
+        })
+        .catch((err) => {
+            console.log("error in index.js addSig: ", err);
+            let wentWrong =
+                "Block transfer computation failure, please try again";
+            res.render("sign", {
+                layout: "main",
+                wentWrong: wentWrong,
+            });
+        });
+});
+
+app.get("/thankyou", (req, res) => {
+    if (!req.session.userId) {
+        res.redirect("/register");
+        return;
+    }
     let sigPic;
     let sigTotal;
+
     //make db query to get signature from database which matches id stored in cookie session
 
     db.sigTotal()
@@ -155,7 +204,7 @@ app.get("/signatories", (req, res) => {
         })
         .then((list) => {
             if (req.session.signatureId == "") {
-                res.redirect("/welcome");
+                res.redirect("/register");
             } else {
                 res.render("signatories", {
                     layout: "main",

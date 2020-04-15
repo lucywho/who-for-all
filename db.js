@@ -15,15 +15,23 @@ module.exports.getNames = () => {
 };
 
 //deal with user inputs
-module.exports.addName = (first_name, last_name, signature) => {
+module.exports.addName = (first_name, last_name, email, hashpass) => {
     return db.query(
         `
-    INSERT INTO signatures (first_name, last_name, signature)
-    VALUES($1, $2, $3) RETURNING first_name, signature, id`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
-        [first_name, last_name, signature] //same variables as arguments
+    INSERT INTO users (first_name, last_name, email, password)
+    VALUES($1, $2, $3, $4)`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
+        [first_name, last_name, email, hashpass] //same variables as arguments
     );
 };
-//so .then block will only treat first name, signature and id as results
+//DON'T FORGET e.g. RETURNING first_name means .then block will only treat first name as results
+
+module.exports.addSig = () => {
+    return db.query(
+        `INSERT INTO signatures (signature, user_id)
+    VALUES($1, $2)`,
+        [signature, user_id]
+    );
+};
 
 module.exports.sigTotal = () => {
     return db.query(`SELECT * FROM signatures`);

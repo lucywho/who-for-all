@@ -1,0 +1,23 @@
+<div id="login-container">
+    <h1 id="h1login">Already a member?</h1>
+    <h2 id="h2login">Log in below with your email and password to sign the petition, if you haven't already done so, and to see the full list of other signatories. </p>
+        <div class="error_msg">{{wentWrong}}</div>
+
+  <form action="/login" method="POST" id="login">
+
+    <div id="input_name">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <p><input name="loginemail" placeholder="email address..." ></p>
+      <p><input name="loginpassword" placeholder="please provide your password..." ></p>
+    </div>
+
+    
+
+    <button id="loginNow">Log in</button>
+
+  </form>
+<h2 id="loginquote">"login-handlebars: new quote here."</h2>
+</div>
+
+
+<footer id="loginfoot">Photo by Pixabay from Pexels</footer>
