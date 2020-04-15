@@ -4,14 +4,18 @@ const db = require("./db.js");
 const handlebars = require("express-handlebars");
 const cookieSession = require("cookie-session"); //delete cookieParser from rest of code
 const csurf = require("csurf");
+const { hash, compare } = require("./bc.js");
+
+//==set view engine
+app.engine("handlebars", handlebars());
+app.set("view engine", "handlebars");
 
 //===middleware
-
 app.use(express.static("./public"));
 
 app.use(
     express.urlencoded({
-        extended: false
+        extended: false,
     })
 );
 
@@ -19,7 +23,7 @@ app.use(
 app.use(
     cookieSession({
         secret: `Like Fire and Ice`,
-        maxAge: 1000 * 60 * 60 * 24 * 14
+        maxAge: 1000 * 60 * 60 * 24 * 14,
     })
 );
 
@@ -34,10 +38,6 @@ app.use((req, res, next) => {
     next();
 });
 
-//==set view engine
-app.engine("handlebars", handlebars());
-app.set("view engine", "handlebars");
-
 //==routes
 app.get("/", (req, res) => {
     res.redirect("/welcome");
@@ -49,7 +49,7 @@ app.get("/welcome", (req, res) => {
         return;
     }
     res.render("welcome", {
-        layout: "main"
+        layout: "main",
     });
 });
 
@@ -67,25 +67,25 @@ app.post("/welcome", (req, res) => {
             "Please reverse the polarity of the neutron flow and try again";
         res.render("welcome", {
             layout: "main",
-            wentWrong: wentWrong
+            wentWrong: wentWrong,
         });
         return;
     }
 
     db.addName(first_name, last_name, signature)
-        .then(results => {
+        .then((results) => {
             console.log("post worked");
             let id = results.rows[0].id;
             req.session.signatureId = id;
             console.log("req.session.signatureId: ", req.session.signatureId);
         })
-        .catch(err => {
+        .catch((err) => {
             console.log("err in addName: ", err);
             let wentWrong =
                 "Block transfer computation failure, please try again";
             res.render("welcome", {
                 layout: "main",
-                wentWrong: wentWrong
+                wentWrong: wentWrong,
             });
             return;
         });
@@ -99,17 +99,19 @@ app.get("/thankyou", (req, res) => {
         return;
     }
 
+    let sigPic;
+    let sigTotal;
     //make db query to get signature from database which matches id stored in cookie session
 
     db.sigTotal()
-        .then(results => {
-            let sigTotal = results;
+        .then((results) => {
+            sigTotal = results;
             console.log("sig total: ", sigTotal);
             //return sigTotal;
         })
         .then(
-            db.sigPic().then(results => {
-                let sigPic = results;
+            db.sigPic().then((results) => {
+                sigPic = results.rows[0].signature;
                 console.log("sigPic:", sigPic);
                 //return sigPic;
             })
@@ -118,16 +120,16 @@ app.get("/thankyou", (req, res) => {
             res.render("thankyou", {
                 layout: "main",
                 sigTotal: sigTotal,
-                sigPic: sigPic
+                sigPic: sigPic,
             });
         })
-        .catch(err => {
+        .catch((err) => {
             console.log("err in sigTotal: ", err);
             let wentWrong =
                 "Check the conceptual geometer and refresh the page";
             res.render("thankyou", {
                 layout: "main",
-                wentWrong: wentWrong
+                wentWrong: wentWrong,
             });
             return;
         });
@@ -135,7 +137,7 @@ app.get("/thankyou", (req, res) => {
 
 app.get("/signatories", (req, res) => {
     db.getNames()
-        .then(results => {
+        .then((results) => {
             let list = [];
 
             for (let i = 0; i < results.length; i++) {
@@ -147,24 +149,24 @@ app.get("/signatories", (req, res) => {
 
             return list;
         })
-        .then(list => {
+        .then((list) => {
             if (req.session.signatureId == "") {
                 res.redirect("/welcome");
             } else {
                 res.render("signatories", {
                     layout: "main",
-                    signatories: list
+                    signatories: list,
                 });
             }
         })
-        .catch(err => {
+        .catch((err) => {
             console.log("err in getNames: ", err);
             let wentWrong =
                 "There’s something that doesn’t make sense. Let’s go and poke it with a stick.";
             res.render("signatories", {
                 layout: "main",
                 signatories: list,
-                wentWrong: wentWrong
+                wentWrong: wentWrong,
             });
             return;
         });
@@ -172,12 +174,3 @@ app.get("/signatories", (req, res) => {
 
 //============================//
 app.listen(8080, () => console.log("petition server running"));
-
-// .catch(err => {
-//     console.log("err in sigTotal: ", err);
-//     let wentWrong =
-//         "Check the conceptual geometer and refresh the page";
-//     res.render("thankyou", {
-//         layout: "main",
-//         wentWrong: wentWrong
-//     });

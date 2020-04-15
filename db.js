@@ -6,11 +6,11 @@ const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition"); //nee
 module.exports.getNames = () => {
     return db
         .query(`SELECT first_name, last_name FROM signatures`)
-        .then(results => {
+        .then((results) => {
             return results.rows;
         })
-        .catch(err => {
-            console.log("err", err);
+        .catch((err) => {
+            console.log("err getNames db", err);
         });
 };
 
@@ -28,21 +28,15 @@ module.exports.addName = (first_name, last_name, signature) => {
 module.exports.sigTotal = () => {
     return db
         .query(`SELECT * FROM signatures`)
-        .then(results => {
+        .then((results) => {
             return results.rowCount;
         })
-        .catch(err => {
-            console.log("err", err);
+        .catch((err) => {
+            console.log("err sigTotal db", err);
         });
 };
 
-module.exports.sigPic = id => {
-    return db
-        .query(`SELECT signature FROM signatures WHERE id = ${id}`)
-        .then(results => {
-            return results.rows[0].signature;
-        })
-        .catch(err => {
-            console.log("err", err);
-        });
+module.exports.sigPic = (id) => {
+    //problem here
+    return db.query(`SELECT signature FROM signatures WHERE id = ${id}`);
 };
