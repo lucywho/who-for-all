@@ -35,3 +35,14 @@ module.exports.sigTotal = () => {
             console.log("err", err);
         });
 };
+
+module.exports.sigPic = id => {
+    return db
+        .query(`SELECT signature FROM signatures WHERE id = ${id}`)
+        .then(results => {
+            return results.rows[0].signature;
+        })
+        .catch(err => {
+            console.log("err", err);
+        });
+};

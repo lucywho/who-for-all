@@ -40,18 +40,14 @@ app.set("view engine", "handlebars");
 
 //==routes
 app.get("/", (req, res) => {
-    //req.session.joined = "new session";
-    //console.log("get request to / route succeeded");
-    req.session.signatureId = "";
     res.redirect("/welcome");
 });
 
 app.get("/welcome", (req, res) => {
-    // if (req.session.signatureId !== "") {
-    //     //just need signature id cookie
-    //     res.redirect("/thankyou");
-    // } else {
-    // }
+    if (!req.session) {
+        res.redirect("/"); //TO DO: doesn't redirect if no cookie
+        return;
+    }
     res.render("welcome", {
         layout: "main"
     });
@@ -81,7 +77,7 @@ app.post("/welcome", (req, res) => {
             console.log("post worked");
             let id = results.rows[0].id;
             req.session.signatureId = id;
-            console.log("req.session.signatureId: ", req.session.signatureId); //returning id number
+            console.log("req.session.signatureId: ", req.session.signatureId);
         })
         .catch(err => {
             console.log("err in addName: ", err);
@@ -98,23 +94,32 @@ app.post("/welcome", (req, res) => {
 });
 
 app.get("/thankyou", (req, res) => {
+    if (req.session.signatureId == "") {
+        res.redirect("/welcome");
+        return;
+    }
+
     //make db query to get signature from database which matches id stored in cookie session
-    //set image tag with signature url in thankyou.hb template
+
     db.sigTotal()
         .then(results => {
             let sigTotal = results;
             console.log("sig total: ", sigTotal);
-            return sigTotal;
+            //return sigTotal;
         })
-        .then(sigTotal => {
-            if (req.session.signatureId == "") {
-                res.redirect("/welcome");
-            } else {
-                res.render("thankyou", {
-                    layout: "main",
-                    sigTotal: sigTotal
-                });
-            }
+        .then(
+            db.sigPic().then(results => {
+                let sigPic = results;
+                console.log("sigPic:", sigPic);
+                //return sigPic;
+            })
+        )
+        .then(() => {
+            res.render("thankyou", {
+                layout: "main",
+                sigTotal: sigTotal,
+                sigPic: sigPic
+            });
         })
         .catch(err => {
             console.log("err in sigTotal: ", err);
@@ -167,3 +172,12 @@ app.get("/signatories", (req, res) => {
 
 //============================//
 app.listen(8080, () => console.log("petition server running"));
+
+// .catch(err => {
+//     console.log("err in sigTotal: ", err);
+//     let wentWrong =
+//         "Check the conceptual geometer and refresh the page";
+//     res.render("thankyou", {
+//         layout: "main",
+//         wentWrong: wentWrong
+//     });
