@@ -18,12 +18,16 @@ module.exports.getNames = () => {
 module.exports.addName = (first_name, last_name, email, hashpass) => {
     return db.query(
         `INSERT INTO users (first_name, last_name, email, password)
-    VALUES($1, $2, $3, $4)`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
+    VALUES($1, $2, $3, $4) RETURNING id`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
         [first_name, last_name, email, hashpass] //same variables as arguments
     );
 };
 
 //DON'T FORGET e.g. RETURNING first_name means .then block will only treat first name as results
+
+module.exports.getEmail = () => {
+    return db.query(`SELECT email FROM users`);
+};
 
 module.exports.addSig = () => {
     return db.query(

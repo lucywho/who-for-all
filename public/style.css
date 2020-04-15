@@ -147,10 +147,12 @@ input:focus {
     text-align: center;
 }
 
-.hidden {
-    display: none;
+#logina {
+    color: cornflowerblue;
+    text-shadow: 1px 1px 1px rgb(141, 37, 38);
 }
 
+/* ==== NOTE: add classes to inputs to differentiate styling from register page === */
 input {
     width: 300px;
     height: 50px;
@@ -184,13 +186,13 @@ input:focus {
 #loginquote {
     color: rgb(254, 251, 133);
     opacity: 75%;
-    text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    text-shadow: 1px 1px 1px rgb(16, 4, 4);
     text-align: center;
     margin: 5px 5px;
 }
 
 #loginfoot {
-    color: lightblue;
+    color: rgb(16, 4, 4);
     text-shadow: 1px 1px 1px rgb(141, 37, 38);
     position: fixed;
     bottom: 0;
@@ -213,8 +215,8 @@ input:focus {
 }
 
 #h1sign {
-    color: rgb(213, 220, 242);
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    color: rgb(217, 191, 149);
+    text-shadow: 1px 1px 1px rgb(3, 3, 3);
     text-align: center;
 }
 
@@ -229,9 +231,9 @@ input:focus {
 }
 
 #signquote {
-    color: rgb(213, 220, 242);
+    color: rgb(217, 191, 149);
     opacity: 75%;
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-shadow: 1px 1px 1px rgb(3, 3, 3);
     text-align: center;
     margin: 5px 5px;
 }
@@ -249,8 +251,8 @@ input:focus {
 }
 
 #plssgn {
-    color: rgb(213, 220, 242);
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    color: rgb(217, 191, 149);
+    text-shadow: 1px 1px 1px rgb(3, 3, 3);
     font-size: 25px;
     margin: 0 0 0 5px;
     font-style: italic;
@@ -260,28 +262,28 @@ input:focus {
 #canvas {
     width: 100%;
     height: 150px;
-    border: rgb(51, 35, 113) solid 2px;
-    background-color: rgb(213, 220, 242);
+    border: rgb(23, 22, 38) solid 2px;
+    background-color: rgb(222, 215, 224);
     margin: 5px 0 0 0;
 }
 
 #signNow {
-    width: 300px;
+    width: 100%;
     height: 50px;
-    background-color: rgb(221, 176, 204);
-    border: rgb(51, 35, 113) solid 2px;
+    background-color: rgb(197, 191, 199);
+    border: rgb(23, 22, 38) solid 2px;
     margin: 5px 0 0 0;
     font-size: 30px;
-    color: rgb(9, 5, 46);
+    color: rgb(23, 22, 38);
 }
 
 #signNow:focus {
     outline: lightskyblue;
-    background-color: rgb(198, 197, 245);
+    background-color: rgb(173, 166, 175);
 }
 
 #signfoot {
-    color: lightblue;
+    color: rgb(217, 191, 149);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;
     bottom: 0;

@@ -52,6 +52,5 @@ function saveSignature() {
 
     let signature = save_sig.value;
 
-    console.log("signature: ", signature); //returns a data:image/png value
-    //return signature;
+    console.log("signature: ", signature);
 }

@@ -60,6 +60,7 @@ app.post("/register", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
     let hashpass;
+    let user_id;
 
     //check all inputs and redo page if not
     if (!first_name || !last_name || !email || !password) {
@@ -74,34 +75,65 @@ app.post("/register", (req, res) => {
         return;
     }
 
-    // hash the password
-    hash(password)
-        .then((hashpass) => {
-            console.log("hashpass worked", hashpass);
-        })
-        .catch((err) => {
-            console.log("error in hashpass: ", err);
-        });
+    // hash the password and add inputs to user table
+    hash(password).then((hashpass) => {
+        console.log("hashpass worked", hashpass);
+        db.addName(first_name, last_name, email, hashpass)
+            .then((results) => {
+                console.log("post worked");
+                user_id = results.rows[0].id;
+                req.session.userId = user_id;
+                res.redirect("/sign");
+            })
+            .catch((err) => {
+                console.log("err in addName: ", err);
+                let wentWrong =
+                    "Block transfer computation failure, please try again";
+                res.render("register", {
+                    layout: "main",
+                    wentWrong: wentWrong,
+                });
+                return;
+            });
+    });
+});
 
-    //add inputs to user table
-    db.addName(first_name, last_name, email, hashpass)
-        .then((results) => {
-            console.log("post worked");
-            let user_id = results.rows[0].id;
-            req.session.userId = user_id;
-            res.redirect("/sign");
-        })
-        .catch((err) => {
-            console.log("err in addName: ", err);
-            let wentWrong =
-                "Block transfer computation failure, please try again";
-            res.render("register", {
+app.get("/login", (req, res) => {
+    if (!req.session) {
+        res.redirect("/");
+        return;
+    }
+
+    res.render("login", {
+        layout: "main",
+    });
+});
+
+app.post("/login"),
+    (req, res) => {
+        //capture inputs
+        const loginemail = req.body.loginemail;
+        const loginpassword = req.body.loginpassword;
+
+        //check inputs complete
+        if (!loginemail || !loginpassword) {
+            let wentWrong = "incomplete data";
+            res.render("login", {
                 layout: "main",
                 wentWrong: wentWrong,
             });
-            return;
-        });
-});
+        }
+
+        //compare email address with database using userid?
+
+        db.getEmail()
+            .then((results) => {
+                console.log("results line 88", results);
+            })
+            .catch((err) => {
+                console.log("err in getEmail: ", err);
+            });
+    };
 
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
@@ -112,6 +144,10 @@ app.get("/sign", (req, res) => {
             wentWrong: wentWrong,
         });
         return;
+    } else {
+        res.render("sign", {
+            layout: "main",
+        });
     }
 });
 
@@ -128,8 +164,9 @@ app.post("/sign", (req, res) => {
 
     db.addSig(signature)
         .then(() => {
-            console.log("addsig worked");
+            console.log("addSig worked");
             req.session.signatureId = signature;
+            res.redirect("/thankyou");
         })
         .catch((err) => {
             console.log("error in index.js addSig: ", err);
@@ -139,6 +176,7 @@ app.post("/sign", (req, res) => {
                 layout: "main",
                 wentWrong: wentWrong,
             });
+            return;
         });
 });
 
