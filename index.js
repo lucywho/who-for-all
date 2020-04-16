@@ -205,9 +205,14 @@ app.post("/sign", (req, res) => {
     }
 
     db.addSig(signature, req.session.userId)
-        .then(() => {
+        .then((results) => {
             console.log("addSig worked");
-            req.session.signatureId = signature;
+            sig_id = results.rows[0].id;
+            req.session.signatureId = sig_id;
+            console.log(
+                "line 211 sig id with results.id",
+                req.session.signatureId
+            );
             res.redirect("/thankyou");
         })
         .catch((err) => {

@@ -16,7 +16,7 @@ module.exports.addName = (first_name, last_name, email, hashpass) => {
 
 module.exports.getNames = () => {
     return db
-        .query(`SELECT first_name, last_name FROM signatures`)
+        .query(`SELECT first_name, last_name FROM users`)
         .then((results) => {
             return results.rows;
         })
@@ -34,7 +34,7 @@ module.exports.getPassword = (logemail) => {
 module.exports.addSig = (signature, user_id) => {
     return db.query(
         `INSERT INTO signatures (signature, user_id)
-    VALUES($1, $2)`,
+    VALUES($1, $2) RETURNING *`,
         [signature, user_id]
     );
 };
