@@ -1,0 +1,29 @@
+<div id="profile-container">
+    <h1 id="h1profile">Add a little more information about yourself</h1>
+    
+
+        <div class="error_msg">{{wentWrong}}</div>
+
+  <form action="/register" method="POST" id="register">
+
+    <div id="input_profile">
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+      <p><input name="age" placeholder="age..." ></p>
+      <p><input name="city" placeholder="city..." ></p>
+      <p><input name="homepage" placeholder="your website address..." ></p>
+    </div>
+
+    
+
+    <button id="profNow">Save Your Profile</button>
+
+  </form>
+
+  <h2 id="h2profile">Prefer not to? <a id="profa" href="/sign"> Click here</a> to sign the petition without saving profile information</h2>
+
+
+<h2 id="profilequote">"***new quote here***."</h2>
+</div>
+
+
+<footer id="profilefoot">Photo by Rakicevic Nenad from Pexels</footer>

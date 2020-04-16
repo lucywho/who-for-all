@@ -3,6 +3,17 @@ const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition"); //nee
 
 //db returns an object with one property - query to allow e.g. following query code:
 
+//deal with user inputs
+module.exports.addName = (first_name, last_name, email, hashpass) => {
+    return db.query(
+        `INSERT INTO users (first_name, last_name, email, password)
+        VALUES($1, $2, $3, $4) RETURNING id`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
+        [first_name, last_name, email, hashpass] //same variables as arguments
+    );
+};
+
+//DON'T FORGET e.g. RETURNING first_name means .then block will only treat first name as results
+
 module.exports.getNames = () => {
     return db
         .query(`SELECT first_name, last_name FROM signatures`)
@@ -14,22 +25,11 @@ module.exports.getNames = () => {
         });
 };
 
-//deal with user inputs
-module.exports.addName = (first_name, last_name, email, hashpass) => {
-    return db.query(
-        `INSERT INTO users (first_name, last_name, email, password)
-    VALUES($1, $2, $3, $4) RETURNING id`, //$ syntax protects against sql injection attack, ensures input is dealt with as a string not as a query
-        [first_name, last_name, email, hashpass] //same variables as arguments
-    );
+module.exports.getPassword = (logemail) => {
+    return db.query(`SELECT password FROM users where email = ${logemail}`);
 };
 
-//DON'T FORGET e.g. RETURNING first_name means .then block will only treat first name as results
-
-module.exports.getEmail = () => {
-    return db.query(`SELECT email FROM users`);
-};
-
-module.exports.addSig = () => {
+module.exports.addSig = (signature, user_id) => {
     return db.query(
         `INSERT INTO signatures (signature, user_id)
     VALUES($1, $2)`,
@@ -41,7 +41,7 @@ module.exports.sigTotal = () => {
     return db.query(`SELECT * FROM signatures`);
 };
 
-module.exports.sigPic = (id) => {
+module.exports.sigPic = (user_id) => {
     //problem here
-    return db.query(`SELECT signature FROM signatures WHERE id = ${id}`);
+    return db.query(`SELECT signature FROM signatures WHERE id = ${user_id}`);
 };

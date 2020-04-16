@@ -83,7 +83,7 @@ app.post("/register", (req, res) => {
                 console.log("post worked");
                 user_id = results.rows[0].id;
                 req.session.userId = user_id;
-                res.redirect("/sign");
+                res.redirect("/login");
             })
             .catch((err) => {
                 console.log("err in addName: ", err);
@@ -97,6 +97,19 @@ app.post("/register", (req, res) => {
             });
     });
 });
+
+//register redirects to new page - profile
+//not required, so no need to check if complete
+//write data to new table, user_profiles
+//redirect to sign
+
+app.get("/profile", (req, res) => {
+    res.render("profile", {
+        layout: "main",
+    });
+});
+//app.post("/profile", (req, res) => { catch data from form, check that website url starts with http or https
+//insert into new database table, redirect to sign })
 
 app.get("/login", (req, res) => {
     if (!req.session) {
@@ -112,23 +125,42 @@ app.get("/login", (req, res) => {
 app.post("/login"),
     (req, res) => {
         //capture inputs
-        const loginemail = req.body.loginemail;
-        const loginpassword = req.body.loginpassword;
+        const logemail = req.body.logemail;
+        const logpassword = req.body.logpassword;
 
         //check inputs complete
-        if (!loginemail || !loginpassword) {
-            let wentWrong = "incomplete data";
+        if (!logemail || !logpassword) {
+            let wentWrong = "please complete both fields";
             res.render("login", {
                 layout: "main",
                 wentWrong: wentWrong,
             });
         }
 
-        //compare email address with database using userid?
-
-        db.getEmail()
+        db.getPassword()
             .then((results) => {
                 console.log("results line 88", results);
+                compare(logpassword, password)
+                    .then((matchValue) => {
+                        console.log("matchValue in login: ", matchValue);
+                        if (matchValue) {
+                            user_id = results.rows[0].id;
+                            req.session.userId = user_id;
+                            //db query signatures to check if user has signed
+                            //yes, store sigId in cookie -> redirect to thanks
+                            // no -> redirect to sign
+                        } else {
+                            let wentWrong =
+                                "Please check your email address and password and try again.";
+                            res.render("login", {
+                                layout: "main",
+                                wentWrong: wentWrong,
+                            });
+                        }
+                    })
+                    .catch((err) => {
+                        console.log("error in login POST: ", err);
+                    });
             })
             .catch((err) => {
                 console.log("err in getEmail: ", err);
@@ -226,6 +258,9 @@ app.get("/thankyou", (req, res) => {
         });
 });
 
+//signatories will now display profile info, name age city, url as a link
+//(1) check in sig table to see who (user_id) has signed
+//(2) get additional information from users tables and users_profiles
 app.get("/signatories", (req, res) => {
     db.getNames()
         .then((results) => {
