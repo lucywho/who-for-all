@@ -204,7 +204,7 @@ app.post("/sign", (req, res) => {
         return;
     }
 
-    db.addSig(signature)
+    db.addSig(signature, req.session.userId)
         .then(() => {
             console.log("addSig worked");
             req.session.signatureId = signature;
@@ -223,7 +223,7 @@ app.post("/sign", (req, res) => {
 });
 
 app.get("/thankyou", (req, res) => {
-    if (!req.session.userId) {
+    if (!req.session.signatureId || !req.session.userId) {
         res.redirect("/register");
         return;
     }

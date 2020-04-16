@@ -323,11 +323,11 @@ input:focus {
 }
 
 #signquote {
-    color: rgb(217, 191, 149);
-    opacity: 75%;
+    color: rgb(207, 175, 137);
+    opacity: 90%;
     text-shadow: 1px 1px 1px rgb(3, 3, 3);
     text-align: center;
-    margin: 5px 5px;
+    margin: 80px 5px 10px 5px;
 }
 
 .hidden {
