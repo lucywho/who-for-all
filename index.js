@@ -122,50 +122,58 @@ app.get("/login", (req, res) => {
     });
 });
 
-app.post("/login"),
-    (req, res) => {
-        //capture inputs
-        const logemail = req.body.logemail;
-        const logpassword = req.body.logpassword;
+app.post("/login", (req, res) => {
+    //capture inputs
+    const logemail = req.body.logemail;
+    const logpassword = req.body.logpassword;
 
-        //check inputs complete
-        if (!logemail || !logpassword) {
-            let wentWrong = "please complete both fields";
-            res.render("login", {
-                layout: "main",
-                wentWrong: wentWrong,
-            });
-        }
+    //check inputs complete
+    if (!logemail || !logpassword) {
+        let wentWrong = "please complete both fields";
+        res.render("login", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+    }
 
-        db.getPassword()
-            .then((results) => {
-                console.log("results line 88", results);
-                compare(logpassword, password)
-                    .then((matchValue) => {
-                        console.log("matchValue in login: ", matchValue);
-                        if (matchValue) {
-                            user_id = results.rows[0].id;
-                            req.session.userId = user_id;
-                            //db query signatures to check if user has signed
-                            //yes, store sigId in cookie -> redirect to thanks
-                            // no -> redirect to sign
-                        } else {
-                            let wentWrong =
-                                "Please check your email address and password and try again.";
-                            res.render("login", {
-                                layout: "main",
-                                wentWrong: wentWrong,
-                            });
-                        }
-                    })
-                    .catch((err) => {
-                        console.log("error in login POST: ", err);
+    db.getPassword().then((results) => {
+        console.log("results line 88", results);
+        compare(logpassword, password)
+            .then((matchValue) => {
+                console.log("matchValue in login: ", matchValue);
+                if (!matchValue) {
+                    let wentWrong =
+                        "Please check your email address and password and try again.";
+                    res.render("login", {
+                        layout: "main",
+                        wentWrong: wentWrong,
                     });
+                    return;
+                } else {
+                    user_id = results.rows[0].id;
+                    req.session.userId = user_id;
+
+                    db.checkSig(req.session.userId).then((results) => {
+                        if (results !== null) {
+                            req.session.signatureId = signature;
+                            res.redirect("/thanks");
+                        } else {
+                            res.render("sign", {
+                                layout: "main",
+                            });
+                            return;
+                        }
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("error in login POST: ", err);
             })
             .catch((err) => {
                 console.log("err in getEmail: ", err);
             });
-    };
+    });
+});
 
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
