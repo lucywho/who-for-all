@@ -26,9 +26,7 @@ module.exports.getNames = () => {
 };
 
 module.exports.getPassword = (logemail) => {
-    return db.query(
-        `SELECT * FROM users where email = ${logemail} RETURNING id, password`
-    );
+    return db.query(`SELECT * FROM users where email = ${logemail}`);
 };
 
 module.exports.addSig = (signature, user_id) => {

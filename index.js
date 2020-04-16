@@ -126,10 +126,11 @@ app.post("/login", (req, res) => {
     //capture inputs
     const logemail = req.body.logemail;
     const logpassword = req.body.logpassword;
+    //console.log("line 129 constants: ", logemail, logpassword);
 
     //check inputs complete
     if (!logemail || !logpassword) {
-        let wentWrong = "please complete both fields";
+        let wentWrong = "Please complete both fields";
         res.render("login", {
             layout: "main",
             wentWrong: wentWrong,
@@ -137,43 +138,50 @@ app.post("/login", (req, res) => {
         return;
     }
 
-    db.getPassword().then((results) => {
-        console.log("results line 88", results);
-        compare(logpassword, password)
-            .then((matchValue) => {
-                console.log("matchValue in login: ", matchValue);
-                if (!matchValue) {
-                    let wentWrong =
-                        "Please check your email address and password and try again.";
-                    res.render("login", {
-                        layout: "main",
-                        wentWrong: wentWrong,
-                    });
-                    return;
-                } else {
-                    user_id = results.rows[0].id;
-                    req.session.userId = user_id;
+    db.getPassword()
+        .then((results) => {
+            console.log("results line 88", results);
+            let hashpass = results.rows[0].password;
 
-                    db.checkSig(req.session.userId).then((results) => {
-                        if (results !== null) {
-                            req.session.signatureId = signature;
-                            res.redirect("/thanks");
-                        } else {
-                            res.render("sign", {
-                                layout: "main",
+            compare(logpassword, hashpass)
+                .then((matchValue) => {
+                    console.log("matchValue in login: ", matchValue);
+                    if (!matchValue) {
+                        let wentWrong =
+                            "Please check your email address and password and try again.";
+                        res.render("login", {
+                            layout: "main",
+                            wentWrong: wentWrong,
+                        });
+                        return;
+                    } else {
+                        user_id = results.rows[0].id;
+                        req.session.userId = user_id;
+
+                        db.checkSig(req.session.userId)
+                            .then((results) => {
+                                if (results !== null) {
+                                    req.session.signatureId = signature;
+                                    res.redirect("/thanks");
+                                } else {
+                                    res.render("sign", {
+                                        layout: "main",
+                                    });
+                                    return;
+                                }
+                            })
+                            .catch((err) => {
+                                console.log("171 error in checkSig: ", err);
                             });
-                            return;
-                        }
-                    });
-                }
-            })
-            .catch((err) => {
-                console.log("error in login POST: ", err);
-            })
-            .catch((err) => {
-                console.log("err in getEmail: ", err);
-            });
-    });
+                    }
+                })
+                .catch((err) => {
+                    console.log("176 error in getPassword: ", err);
+                });
+        })
+        .catch((err) => {
+            console.log("180 err in POST login : ", err);
+        });
 });
 
 app.get("/sign", (req, res) => {
@@ -196,7 +204,7 @@ app.post("/sign", (req, res) => {
     const signature = req.body.signature;
 
     if (!signature) {
-        let wentWrong = "Something went wrong. Let's poke it with a stick";
+        let wentWrong = "Something went wrong. Let's poke it with a stick.";
         res.render("sign", {
             layout: "main",
             wentWrong: wentWrong,
