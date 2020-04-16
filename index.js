@@ -83,7 +83,7 @@ app.post("/register", (req, res) => {
                 console.log("post worked");
                 user_id = results.rows[0].id;
                 req.session.userId = user_id;
-                res.redirect("/login");
+                res.redirect("/profile");
             })
             .catch((err) => {
                 console.log("err in addName: ", err);
@@ -134,6 +134,7 @@ app.post("/login", (req, res) => {
             layout: "main",
             wentWrong: wentWrong,
         });
+        return;
     }
 
     db.getPassword().then((results) => {
@@ -200,6 +201,7 @@ app.post("/sign", (req, res) => {
             layout: "main",
             wentWrong: wentWrong,
         });
+        return;
     }
 
     db.addSig(signature)
