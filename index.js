@@ -190,7 +190,7 @@ app.post("/login", (req, res) => {
                     } else {
                         user_id = results.rows[0].id;
                         req.session.userId = user_id;
-                        console.log("160 user_id", req.session.userId);
+                        console.log("193 user_id", req.session.userId);
 
                         db.checkSig(req.session.userId)
                             .then((results) => {
@@ -198,7 +198,7 @@ app.post("/login", (req, res) => {
                                     sig_id = results.rows[0].id;
                                     req.session.signatureId = sig_id;
                                     console.log(
-                                        "169 sig_id",
+                                        "201 sig_id",
                                         req.session.signatureId
                                     );
                                     res.redirect("/thankyou");
@@ -210,16 +210,16 @@ app.post("/login", (req, res) => {
                                 }
                             })
                             .catch((err) => {
-                                console.log("176 error in checkSig: ", err);
+                                console.log("213 error in checkSig: ", err);
                             });
                     }
                 })
                 .catch((err) => {
-                    console.log("187 error in getPassword: ", err);
+                    console.log("218 error in getPassword: ", err);
                 });
         })
         .catch((err) => {
-            console.log("191 err in POST login : ", err);
+            console.log("222 err in POST login : ", err);
         });
 });
 
