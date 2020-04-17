@@ -50,3 +50,12 @@ module.exports.sigPic = (user_id) => {
     //problem here
     return db.query(`SELECT signature FROM signatures WHERE id = ${user_id}`);
 };
+
+module.exports.addProfile = (age, city, homepage, userId) => {
+    return db.query(`INSERT INTO user_profiles (age, city, url, user_id)`, [
+        age,
+        city,
+        homepage,
+        userId,
+    ]);
+};

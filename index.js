@@ -64,7 +64,7 @@ app.post("/register", (req, res) => {
 
     //check all inputs and redo page if not
     if (!first_name || !last_name || !email || !password) {
-        console.log("missing inputs");
+        console.log("register: missing inputs");
 
         let wentWrong =
             "Please reverse the polarity of the neutron flow and try again";
@@ -80,7 +80,7 @@ app.post("/register", (req, res) => {
         console.log("hashpass worked", hashpass);
         db.addName(first_name, last_name, email, hashpass)
             .then((results) => {
-                console.log("post worked");
+                console.log("register post worked");
                 user_id = results.rows[0].id;
                 req.session.userId = user_id;
                 res.redirect("/profile");
@@ -114,9 +114,33 @@ app.post("/profile", (req, res) => {
     const age = req.body.age;
     const city = req.body.city;
     const homepage = req.body.homepage;
-    //check that website url starts with http or https
+    console.log("profile inputs: ", age, city, homepage);
 
-    //insert into new database table, redirect to sign
+    //check that website url starts with http or https
+    if (homepage !== "" && !homepage.startsWith("http")) {
+        let wentWrong =
+            "Please ensure that your homepage address is a valid url or leave blank";
+        res.render("profile", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+    } else {
+        //insert into new database table, redirect to sign
+        db.addProfile(age, city, homepage, userId)
+            .then(() => {
+                console.log("profile post works");
+                res.redirect("/sign");
+            })
+            .catch((err) => {
+                console.log("135 error in addProfile:", err);
+                let wentWrong =
+                    "Something is wrong. Let's poke it with a stick.";
+                res.render("profile", {
+                    layout: "main",
+                    wentWrong: wentWrong,
+                });
+            });
+    }
 });
 
 app.get("/login", (req, res) => {
@@ -310,7 +334,7 @@ app.get("/signatories", (req, res) => {
 
                 list.push(` ${item.first_name} ${item.last_name}`);
             }
-            console.log("list: ", list);
+            //console.log("list: ", list);
 
             return list;
         })
@@ -335,6 +359,11 @@ app.get("/signatories", (req, res) => {
             });
             return;
         });
+});
+
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/login");
 });
 
 //============================//

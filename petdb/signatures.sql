@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS signatures, users;
 DROP TABLE IF EXISTS user_profiles CASCADE;
+DROP TABLE IF EXISTS signatures, users;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
