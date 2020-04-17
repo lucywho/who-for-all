@@ -477,6 +477,7 @@ a:hover #h2thankyou {
     min-height: 50px;
     max-height: fit-content;
     font-size: 20px;
+    text-align: center;
 }
 
 #signatoriesfoot {

@@ -140,7 +140,7 @@ app.post("/login", (req, res) => {
         return;
     }
 
-    db.getPassword()
+    db.getPassword(logemail)
         .then((results) => {
             let hashpass = results.rows[0].password;
             console.log("144 results", hashpass);
@@ -170,7 +170,7 @@ app.post("/login", (req, res) => {
                                         "169 sig_id",
                                         req.session.signatureId
                                     );
-                                    res.redirect("/thanks");
+                                    res.redirect("/thankyou");
                                 } else {
                                     res.render("sign", {
                                         layout: "main",
@@ -274,7 +274,7 @@ app.get("/thankyou", (req, res) => {
                     //return sigPic;
                 })
                 .catch((err) => {
-                    console.log("err in sigPic: ", err);
+                    console.log("277 err in sigPic: ", err);
                 });
         })
         .catch((err) => {
