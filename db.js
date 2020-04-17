@@ -37,7 +37,7 @@ module.exports.addSig = (signature, user_id) => {
     );
 };
 
-module.exports.checkSig = () => {
+module.exports.checkSig = (user_id) => {
     return db.query(`SELECT * FROM signatures WHERE user_id = ${user_id}`);
 };
 

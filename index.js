@@ -123,12 +123,14 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-    //capture inputs
+    //capture inputs - works
     const logemail = req.body.logemail;
     const logpassword = req.body.logpassword;
+    let hashpass;
+    let user_id;
     //console.log("line 129 constants: ", logemail, logpassword);
 
-    //check inputs complete
+    //check inputs complete - works
     if (!logemail || !logpassword) {
         let wentWrong = "Please complete both fields";
         res.render("login", {
@@ -140,8 +142,8 @@ app.post("/login", (req, res) => {
 
     db.getPassword()
         .then((results) => {
-            console.log("results line 88", results);
             let hashpass = results.rows[0].password;
+            console.log("144 results", hashpass);
 
             compare(logpassword, hashpass)
                 .then((matchValue) => {
@@ -157,11 +159,17 @@ app.post("/login", (req, res) => {
                     } else {
                         user_id = results.rows[0].id;
                         req.session.userId = user_id;
+                        console.log("160 user_id", req.session.userId);
 
                         db.checkSig(req.session.userId)
                             .then((results) => {
                                 if (results !== null) {
-                                    req.session.signatureId = signature;
+                                    sig_id = results.rows[0].id;
+                                    req.session.signatureId = sig_id;
+                                    console.log(
+                                        "169 sig_id",
+                                        req.session.signatureId
+                                    );
                                     res.redirect("/thanks");
                                 } else {
                                     res.render("sign", {
@@ -171,16 +179,16 @@ app.post("/login", (req, res) => {
                                 }
                             })
                             .catch((err) => {
-                                console.log("171 error in checkSig: ", err);
+                                console.log("176 error in checkSig: ", err);
                             });
                     }
                 })
                 .catch((err) => {
-                    console.log("176 error in getPassword: ", err);
+                    console.log("187 error in getPassword: ", err);
                 });
         })
         .catch((err) => {
-            console.log("180 err in POST login : ", err);
+            console.log("191 err in POST login : ", err);
         });
 });
 
