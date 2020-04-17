@@ -489,3 +489,54 @@ a:hover #h2thankyou {
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+/* SIGCITY PAGE */
+
+#sigcity-container {
+    min-height: 100vh;
+    background-image: url(../pinkstarrysky.jpg);
+    background-color: rgb(73, 51, 75);
+    background-size: cover;
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#h1sigcity {
+    color: rgb(245, 211, 232);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+}
+
+#sigcityquote {
+    color: rgb(245, 211, 232);
+    opacity: 75%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 0;
+}
+
+#sigcity-list {
+    margin: 20px 0;
+    color: rgb(33, 20, 39);
+    background-color: rgb(245, 211, 232);
+    border: 5px solid rgb(134, 98, 125);
+    width: 300px;
+    min-height: 50px;
+    max-height: fit-content;
+    font-size: 20px;
+    text-align: center;
+}
+
+#sigcityfoot {
+    color: rgb(250, 207, 213);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}

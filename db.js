@@ -1,7 +1,8 @@
 const spicedPg = require("spiced-pg");
-const db = spicedPg("postgres:postgres:postgres@localhost:5432/petition"); //need to create new petition database - replace actors with new name
-
-//db returns an object with one property - query to allow e.g. following query code:
+const db = spicedPg(
+    process.env.DATABASE_URL ||
+        "postgres:postgres:postgres@localhost:5432/petition"
+);
 
 //deal with user inputs
 module.exports.addName = (first_name, last_name, email, hashpass) => {

@@ -108,8 +108,16 @@ app.get("/profile", (req, res) => {
         layout: "main",
     });
 });
-//app.post("/profile", (req, res) => { catch data from form, check that website url starts with http or https
-//insert into new database table, redirect to sign })
+
+app.post("/profile", (req, res) => {
+    //catch data from form,
+    const age = req.body.age;
+    const city = req.body.city;
+    const homepage = req.body.homepage;
+    //check that website url starts with http or https
+
+    //insert into new database table, redirect to sign
+});
 
 app.get("/login", (req, res) => {
     if (!req.session) {
@@ -330,4 +338,7 @@ app.get("/signatories", (req, res) => {
 });
 
 //============================//
-app.listen(8080, () => console.log("petition server running"));
+
+app.listen(process.env.PORT || 8080, () =>
+    console.log("petition server running")
+);
