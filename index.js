@@ -194,7 +194,7 @@ app.post("/login", (req, res) => {
 
                         db.checkSig(req.session.userId)
                             .then((results) => {
-                                if (results !== null) {
+                                if (results.rows[0] !== undefined) {
                                     sig_id = results.rows[0].id;
                                     req.session.signatureId = sig_id;
                                     console.log(
@@ -348,6 +348,22 @@ app.get("/signatories", (req, res) => {
             });
             return;
         });
+});
+
+app.get("/sigs-by-city", (req, res) => {
+    if (!req.session.userId) {
+        let wentWrong =
+            "You are not yet registered, please fill out the form below";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else {
+        res.render("sigs-by-city", {
+            layout: "main",
+        });
+    }
 });
 
 app.get("/logout", (req, res) => {
