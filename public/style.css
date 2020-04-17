@@ -400,14 +400,14 @@ input:focus {
 }
 
 #h1thankyou {
-    color: rgb(164, 217, 231);
+    color: rgb(172, 224, 241);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
     margin: 0 30px;
 }
 
 #tyquote {
-    color: rgb(164, 217, 231);
+    color: rgb(172, 224, 241);
     opacity: 75%;
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
@@ -415,7 +415,7 @@ input:focus {
 }
 
 #h2thankyou {
-    color: rgb(165, 215, 231);
+    color: rgb(172, 224, 241);
     text-align: center;
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     margin: 30px 30px;

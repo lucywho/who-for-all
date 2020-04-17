@@ -17,7 +17,12 @@ module.exports.addName = (first_name, last_name, email, hashpass) => {
 
 module.exports.getNames = () => {
     return db
-        .query(`SELECT first_name, last_name FROM users`)
+        .query(
+            `SELECT users.first_name AS user_firstName, users.last_name AS user_lastName, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url
+             FROM users
+              JOIN user_profiles ON users.id = user_profiles.user_id
+              JOIN signatures ON user_profiles.user_id = signatures.user_id`
+        )
         .then((results) => {
             return results.rows;
         })
@@ -51,11 +56,9 @@ module.exports.sigPic = (user_id) => {
     return db.query(`SELECT signature FROM signatures WHERE id = ${user_id}`);
 };
 
-module.exports.addProfile = (age, city, homepage, userId) => {
-    return db.query(`INSERT INTO user_profiles (age, city, url, user_id)`, [
-        age,
-        city,
-        homepage,
-        userId,
-    ]);
+module.exports.addProfile = (age, city, homepage, user_id) => {
+    return db.query(
+        `INSERT INTO user_profiles (age, city, url, user_id) VALUES($1, $2, $3, $4)`,
+        [age, city, homepage, user_id]
+    );
 };

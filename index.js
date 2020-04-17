@@ -54,12 +54,12 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
+    console.log("post register running");
     //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const email = req.body.email;
     const password = req.body.password;
-    let hashpass;
     let user_id;
 
     //check all inputs and redo page if not
@@ -98,11 +98,6 @@ app.post("/register", (req, res) => {
     });
 });
 
-//register redirects to new page - profile
-//not required, so no need to check if complete
-//write data to new table, user_profiles
-//redirect to sign
-
 app.get("/profile", (req, res) => {
     res.render("profile", {
         layout: "main",
@@ -110,6 +105,7 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
+    console.log("post profile running");
     //catch data from form,
     const age = req.body.age;
     const city = req.body.city;
@@ -126,13 +122,16 @@ app.post("/profile", (req, res) => {
         });
     } else {
         //insert into new database table, redirect to sign
-        db.addProfile(age, city, homepage, userId)
+        let user_id = req.session.userId;
+        db.addProfile(age, city, homepage, user_id)
             .then(() => {
                 console.log("profile post works");
+                // user_id = results.rows[0].id;
+                // req.session.userId = user_id;
                 res.redirect("/sign");
             })
             .catch((err) => {
-                console.log("135 error in addProfile:", err);
+                console.log("134 error in addProfile:", err);
                 let wentWrong =
                     "Something is wrong. Let's poke it with a stick.";
                 res.render("profile", {
@@ -327,24 +326,14 @@ app.get("/thankyou", (req, res) => {
 app.get("/signatories", (req, res) => {
     db.getNames()
         .then((results) => {
-            let list = [];
+            console.log("329 getNames results: ", results);
 
-            for (let i = 0; i < results.length; i++) {
-                let item = results[i];
-
-                list.push(` ${item.first_name} ${item.last_name}`);
-            }
-            //console.log("list: ", list);
-
-            return list;
-        })
-        .then((list) => {
             if (req.session.signatureId == "") {
                 res.redirect("/register");
             } else {
                 res.render("signatories", {
                     layout: "main",
-                    signatories: list,
+                    signatories: results,
                 });
             }
         })
