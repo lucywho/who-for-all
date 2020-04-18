@@ -352,14 +352,12 @@ app.get("/signatories", (req, res) => {
 
 app.get("/sigs-by-city/:user_city", (req, res) => {
     const user_city = req.params.user_city;
-    console.log("req params city: ", req.params.user_city);
+    console.log("user_city: ", user_city);
 
     db.getCity(user_city)
         .then((results) => {
-            //console.log("355 getCity results: ", results);
             console.log("360 getCity results", results);
             console.log("361 getCity results.rows", results.rows);
-            return results.rows;
         })
         .catch((err) => {
             console.log("365 err getCity db", err);
