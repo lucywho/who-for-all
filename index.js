@@ -326,7 +326,7 @@ app.get("/thankyou", (req, res) => {
 app.get("/signatories", (req, res) => {
     db.getNames()
         .then((results) => {
-            console.log("329 getNames results: ", results);
+            //console.log("329 getNames results: ", results);
 
             if (req.session.signatureId == "") {
                 res.redirect("/register");
@@ -351,19 +351,23 @@ app.get("/signatories", (req, res) => {
 });
 
 app.get("/sigs-by-city", (req, res) => {
-    if (!req.session.userId) {
-        let wentWrong =
-            "You are not yet registered, please fill out the form below";
-        res.render("register", {
-            layout: "main",
-            wentWrong: wentWrong,
+    db.getCity()
+        .then((results) => {
+            //console.log("355 getCity results: ", results);
+            console.log("356 getCity results", results);
+
+            if (!req.session.userId) {
+                res.redirect("/register");
+            } else {
+                res.render("sigs-by-city", {
+                    layout: "main",
+                    citysigs: results,
+                });
+            }
+        })
+        .catch((err) => {
+            console.log("367 err in GET sigs-by-city : ", err);
         });
-        return;
-    } else {
-        res.render("sigs-by-city", {
-            layout: "main",
-        });
-    }
 });
 
 app.get("/logout", (req, res) => {

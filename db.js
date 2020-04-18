@@ -18,7 +18,7 @@ module.exports.addName = (first_name, last_name, email, hashpass) => {
 module.exports.getNames = () => {
     return db
         .query(
-            `SELECT users.first_name AS user_firstName, users.last_name AS user_lastName, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url
+            `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url
              FROM users
               JOIN user_profiles ON users.id = user_profiles.user_id
               JOIN signatures ON user_profiles.user_id = signatures.user_id`
@@ -61,4 +61,20 @@ module.exports.addProfile = (age, city, homepage, user_id) => {
         `INSERT INTO user_profiles (age, city, url, user_id) VALUES($1, $2, $3, $4)`,
         [age, city, homepage, user_id]
     );
+};
+
+module.exports.getCity = () => {
+    return db
+        .query(
+            `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url 
+        FROM users 
+        JOIN user_profiles ON user_id = user_profiles.user_id WHERE LOWER (user_profiles.city)=LOWER($1);`,
+            [user_city]
+        )
+        .then((results) => {
+            return results.rows;
+        })
+        .catch((err) => {
+            console.log("err getNames db", err);
+        });
 };
