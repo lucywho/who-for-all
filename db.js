@@ -52,7 +52,6 @@ module.exports.sigTotal = () => {
 };
 
 module.exports.sigPic = (user_id) => {
-    //problem here
     return db.query(`SELECT signature FROM signatures WHERE id = ${user_id}`);
 };
 
@@ -63,10 +62,11 @@ module.exports.addProfile = (age, city, homepage, user_id) => {
     );
 };
 
-module.exports.getCity = (user_city) => {
+module.exports.getCity = (sel_city) => {
     return db.query(
         `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url 
         FROM users 
-        JOIN user_profiles ON user_id = user_profiles.user_id WHERE LOWER (user_profiles.city)=LOWER(${user_city});`
+        JOIN user_profiles ON user_id = user_profiles.user_id WHERE LOWER(user_profiles.city)=LOWER($1)`,
+        [sel_city]
     );
 };

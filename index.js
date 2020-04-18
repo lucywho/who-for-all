@@ -320,9 +320,6 @@ app.get("/thankyou", (req, res) => {
         });
 });
 
-//signatories will now display profile info, name age city, url as a link
-//(1) check in sig table to see who (user_id) has signed
-//(2) get additional information from users tables and users_profiles
 app.get("/signatories", (req, res) => {
     db.getNames()
         .then((results) => {
@@ -350,31 +347,30 @@ app.get("/signatories", (req, res) => {
         });
 });
 
-app.get("/sigs-by-city/:user_city", (req, res) => {
-    const user_city = req.params.user_city;
-    console.log("user_city: ", user_city);
+app.get("/sigs-by-city/:sel_city", (req, res) => {
+    const sel_city = req.params.sel_city;
+    console.log("sel_city: ", sel_city);
 
-    db.getCity(user_city)
-        .then((results) => {
-            console.log("360 getCity results", results);
-            console.log("361 getCity results.rows", results.rows);
-        })
-        .catch((err) => {
-            console.log("365 err getCity db", err);
-        })
-        .then(() => {
-            if (!req.session.userId) {
-                res.redirect("/register");
-            } else {
+    if (!req.session.userId) {
+        res.redirect("/register");
+    } else {
+        db.getCity(sel_city)
+            .then((results) => {
+                console.log("361 getCity results.rows", results.rows);
+                const citylist = results.rows;
+
                 res.render("sigs-by-city", {
                     layout: "main",
-                    citysigs: results,
+                    citysigs: citylist,
                 });
-            }
-        })
-        .catch((err) => {
-            console.log("379 err in GET sigs-by-city : ", err);
-        });
+            })
+            .catch((err) => {
+                console.log("365 err getCity db", err);
+            })
+            .catch((err) => {
+                console.log("379 err in GET sigs-by-city : ", err);
+            });
+    }
 });
 
 app.get("/logout", (req, res) => {
