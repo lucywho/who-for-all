@@ -282,8 +282,6 @@ app.get("/thankyou", (req, res) => {
     let sigPic;
     let sigTotal;
 
-    //make db query to get signature from database which matches id stored in cookie session
-
     db.sigTotal()
         .then((results) => {
             //console.log("results in sigTotal: ", results);
@@ -294,18 +292,15 @@ app.get("/thankyou", (req, res) => {
         .then(() => {
             db.sigPic(req.session.signatureId)
                 .then((results) => {
-                    //console.log("results in sigPic: ", results);
                     sigPic = results.rows[0].signature;
-                    //console.log("sigPic:", sigPic);
                     res.render("thankyou", {
                         layout: "main",
                         sigTotal: sigTotal,
                         sigPic: sigPic,
                     });
-                    //return sigPic;
                 })
                 .catch((err) => {
-                    console.log("277 err in sigPic: ", err);
+                    console.log("err in sigPic: ", err);
                 });
         })
         .catch((err) => {
@@ -362,6 +357,7 @@ app.get("/sigs-by-city/:selCity", (req, res) => {
                 res.render("sigs-by-city", {
                     layout: "main",
                     citysigs: citylist,
+                    city: selCity,
                 });
             })
             .catch((err) => {
