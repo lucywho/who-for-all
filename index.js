@@ -347,16 +347,16 @@ app.get("/signatories", (req, res) => {
         });
 });
 
-app.get("/sigs-by-city/:sel_city", (req, res) => {
-    const sel_city = req.params.sel_city;
-    console.log("sel_city: ", sel_city);
+app.get("/sigs-by-city/:selCity", (req, res) => {
+    const selCity = req.params.selCity;
+    console.log("sel_city: ", selCity);
 
     if (!req.session.userId) {
         res.redirect("/register");
     } else {
-        db.getCity(sel_city)
+        db.getCity(selCity)
             .then((results) => {
-                console.log("361 getCity results.rows", results.rows);
+                console.log("361 getCity results.rows", results.rows[0]);
                 const citylist = results.rows;
 
                 res.render("sigs-by-city", {

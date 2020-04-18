@@ -62,11 +62,15 @@ module.exports.addProfile = (age, city, homepage, user_id) => {
     );
 };
 
-module.exports.getCity = (sel_city) => {
+module.exports.getCity = (selCity) => {
     return db.query(
         `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url 
         FROM users 
-        JOIN user_profiles ON user_id = user_profiles.user_id WHERE LOWER(user_profiles.city)=LOWER($1)`,
-        [sel_city]
+        LEFT OUTER JOIN user_profiles 
+        ON users.id = user_profiles.user_id 
+        JOIN signatures 
+        ON user_profiles.user_id = signatures.user_id 
+        WHERE LOWER(user_profiles.city)=LOWER($1)`,
+        [selCity]
     );
 };
