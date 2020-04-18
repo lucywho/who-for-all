@@ -18,10 +18,8 @@ module.exports.addName = (first_name, last_name, email, hashpass) => {
 module.exports.getNames = () => {
     return db
         .query(
-            `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url
-             FROM users
-              JOIN user_profiles ON users.id = user_profiles.user_id
-              JOIN signatures ON user_profiles.user_id = signatures.user_id`
+            `SELECT signatures.id, signatures.user_id, users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url FROM signatures LEFT JOIN users ON signatures.user_id = users.id LEFT JOIN user_profiles ON signatures.user_id = user_profiles.user_id;
+            `
         )
         .then((results) => {
             return results.rows;
@@ -64,12 +62,7 @@ module.exports.addProfile = (age, city, homepage, user_id) => {
 
 module.exports.getCity = (selCity) => {
     return db.query(
-        `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url 
-        FROM users 
-        LEFT OUTER JOIN user_profiles 
-        ON users.id = user_profiles.user_id 
-        JOIN signatures 
-        ON user_profiles.user_id = signatures.user_id 
+        `SELECT signatures.id, signatures.user_id, users.first_name AS user_firstname, users.last_name AS user_lastname, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url FROM signatures LEFT JOIN users ON signatures.user_id = users.id LEFT JOIN user_profiles ON signatures.user_id = user_profiles.user_id 
         WHERE LOWER(user_profiles.city)=LOWER($1)`,
         [selCity]
     );
