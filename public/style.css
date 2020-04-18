@@ -9,6 +9,10 @@ h2 {
     font-size: 20px;
 }
 
+p {
+    font-size: 20px;
+}
+
 /* REGISTER PAGE */
 #register-container {
     min-height: 100vh;
@@ -65,6 +69,7 @@ input {
     background-color: rgb(213, 220, 242);
     border: rgb(51, 35, 113) solid 2px;
     margin: 5px 0;
+    padding: 0 0 0 5px;
     font-size: 30px;
     color: rgb(27, 40, 49);
 }
@@ -75,11 +80,12 @@ input:focus {
 }
 
 #regNow {
-    width: 300px;
+    width: 309px;
     height: 50px;
     background-color: rgb(221, 176, 204);
     border: rgb(51, 35, 113) solid 2px;
     margin: 5px 0 0 0;
+    padding: 0 0 0 5px;
     font-size: 30px;
     color: rgb(9, 5, 46);
 }
@@ -169,7 +175,7 @@ input:focus {
 }
 
 #loginNow {
-    width: 300px;
+    width: 309px;
     height: 50px;
     background-color: rgb(254, 186, 83);
     border: rgb(166, 59, 41) solid 2px;

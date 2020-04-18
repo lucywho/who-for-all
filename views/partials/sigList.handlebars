@@ -1,4 +1,4 @@
 {{#signatories}}
-<div><p><a href="{{user_url}}">{{user_firstname}} {{user_lastname}}</a>, {{user_age}}, <a href="/sigs-by-city/{{user_city}}">{{user_city}}</a></p></div>
+<div><p>{{#if user_url}}<a href="{{user_url}}">{{/if}}{{user_firstname}} {{user_lastname}}{{#if user_url}}</a>{{/if}}{{#if user_age}}, {{user_age}}{{/if}}{{#if user_city}}, <a href="/sigs-by-city/{{user_city}}">{{user_city}}</a>{{/if}}</p></div>
 {{/signatories}}
 
