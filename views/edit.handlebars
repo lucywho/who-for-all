@@ -2,17 +2,17 @@
 
 <div class="error_msg">{{wentWrong}}</div>
 
-<form action="/edit" method="POST" id="edit">
+<form action="edit" method="POST" id="edit">
 
     <div id="edit_profile">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
-     <p><input name="first_name" placeholder="First name..." value={{firstname}}></p>
-      <p><input name="last_name" placeholder="Last name..." value={{lastname}}></p>
+     <p><input name="first_name" type="text" placeholder="First name..." value={{firstname}}></p>
+      <p><input name="last_name" type="text" placeholder="Last name..." value={{lastname}}></p>
       <p><input type="email" name="email" placeholder="email address..." value={{email}}></p>
       <p><input type="password"  name="password" placeholder="choose a password..." ></p>
-      <p><input name="age" placeholder="age..." value={{age}}></p>
-      <p><input name="city" placeholder="city..." value={{city}} ></p>
-      <p><input name="homepage" placeholder="http..." value={{url}}></p>
+      <p><input type="number"  name="age" placeholder="age..." value={{age}}></p>
+      <p><input type="text" name="city" placeholder="city..." value={{city}} ></p>
+      <p><input type="url" name="homepage" placeholder="http..." value={{url}}></p>
     </div>
 
     

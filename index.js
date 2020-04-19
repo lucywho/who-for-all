@@ -263,32 +263,64 @@ app.post("/profile/edit", (req, res) => {
     const city = req.body.city;
     const url = req.body.homepage;
 
-    let hashpass;
-    let user_id;
+    let user_id = req.session.userId;
 
     if (password) {
-        hash(password).then((hashpass) => {
-            console.log("hashpass worked", hashpass);
+        hash(password)
+            .then((hashpass) => {
+                console.log("hashpass worked", hashpass);
 
-            db.editProfile()
-                .then((results) => {
-                    console.log("edit post worked");
-                    // user_id = results.rows[0].id;
-                    // req.session.userId = user_id;
-                    res.redirect("/signatories");
-                })
-                .catch((err) => {
-                    console.log("err in editProfile: ", err);
-                    let wentWrong =
-                        "Block transfer computation failure, please try again";
-                    res.render("profile/edit", {
-                        layout: "main",
-                        wentWrong: wentWrong,
+                db.editUserInfoPass(
+                    firstname,
+                    lastname,
+                    email,
+                    hashpass,
+                    user_id
+                )
+                    .then(() => {
+                        db.editUserProfile(age, city, url, user_id);
+                    })
+                    .then((results) => {
+                        console.log("edit post worked");
+                        res.redirect("/signatories");
+                    })
+                    .catch((err) => {
+                        console.log("err in editUserInfoPass: ", err);
+                        // let wentWrong =
+                        //     "Block transfer computation failure, please try again";
+                        // res.render("edit", {
+                        //     layout: "main",
+                        //     wentWrong: wentWrong,
+                        // });
+                        //return;
                     });
-                    return;
-                });
-        }); // end of hashpass then
+            })
+            .catch((err) => {
+                console.log("err in editUserInfoPass: ", err);
+            }); // end of then.hashpass.catch
     } //end of if(password)
+    else {
+        db.editUserInfo(firstname, lastname, email, user_id)
+            .then(() => {
+                db.editUserProfile(age, city, url, user_id);
+            })
+            .then((results) => {
+                console.log("edit post worked");
+                // user_id = results.rows[0].id;
+                // req.session.userId = user_id;
+                res.redirect("/signatories");
+            })
+            .catch((err) => {
+                console.log("err in editUserInfo: ", err);
+                // let wentWrong =
+                //     "Block transfer computation failure, please try again";
+                // res.render("edit", {
+                //     layout: "main",
+                //     wentWrong: wentWrong,
+                // });
+                //return;
+            });
+    } //end of else
 }); //end of app.post
 
 app.get("/sign", (req, res) => {
