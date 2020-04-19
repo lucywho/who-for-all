@@ -223,6 +223,37 @@ app.post("/login", (req, res) => {
         });
 });
 
+app.get("/profile/edit", (req, res) => {
+    if (!req.session) {
+        res.redirect("/");
+        return;
+    }
+    let currentUser = req.session.userId;
+    console.log("232 edit req.session.userId: ", req.session.userId); //returns userId and signatureId
+
+    db.getProfile(currentUser)
+        .then((results) => {
+            let profile = results.rows;
+            res.render("edit", {
+                firstname: profile[0].user_firstname,
+                lastname: profile[0].user_lastname,
+                email: profile[0].user_email,
+                age: profile[0].user_age,
+                city: profile[0].user_city,
+                url: profile[0].user_url,
+                results,
+            });
+        })
+        .catch((err) => {
+            console.log("error in getProfile: ", err);
+            let wentWrong = "Something is wrong. Let's poke it with a stick.";
+            res.render("edit", {
+                layout: "main",
+                wentWrong: wentWrong,
+            });
+        });
+});
+
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
         let wentWrong =

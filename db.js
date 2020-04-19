@@ -67,3 +67,10 @@ module.exports.getCity = (selCity) => {
         [selCity]
     );
 };
+
+module.exports.getProfile = (currentUser) => {
+    return db.query(
+        `SELECT users.first_name AS user_firstname, users.last_name AS user_lastname, users.email AS user_email, users.password AS user_password, user_profiles.age AS user_age, user_profiles.city AS user_city, user_profiles.url AS user_url FROM users LEFT JOIN user_profiles ON users.id = user_profiles.user_id WHERE user.user_id=$1`,
+        [currentUser]
+    );
+};
