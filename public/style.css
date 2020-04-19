@@ -2,22 +2,9 @@
     margin: 0;
     padding: 0;
 }
-h1 {
-    font-size: 25px;
-}
-h2 {
-    font-size: 20px;
-}
 
-p {
-    font-size: 20px;
-}
-
-/* REGISTER PAGE */
-#register-container {
+.container {
     min-height: 100vh;
-    background-image: url(../darkbluegalaxy.jpg);
-    background-color: rgb(9, 5, 46);
     background-size: cover;
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
@@ -27,14 +14,50 @@ p {
     justify-content: space-around;
 }
 
+#navbar {
+    color: yellow;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+#navbar a {
+    color: yellow;
+}
+#navbar a:hover {
+    color: rgb(255, 120, 0);
+}
+
+#navbar a:focus {
+    color: rgb(255, 160, 0);
+}
+
+/* #navbar a:visited {
+    color: rgb(255, 145, 0);
+} */
+
+h1 {
+    font-size: 30px;
+}
+h2 {
+    font-size: 25px;
+}
+
 .error_msg {
     position: relative;
     height: auto;
     color: yellow;
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-shadow: 1px 1px 1px red;
     font-style: italic;
-    font-size: 20px;
+    font-size: 18px;
     margin: 10px 0 0 0;
+}
+
+/* REGISTER PAGE */
+#register-container {
+    background-image: url(../darkbluegalaxy.jpg);
+    background-color: rgb(9, 5, 46);
 }
 
 #h1register {
@@ -48,10 +71,11 @@ p {
     text-align: center;
 }
 
-#pregister {
+#regblock {
     color: rgb(213, 220, 242);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
-    text-align: center;
+    font-size: 20px;
+    margin: 10px 40px 0 40px;
 }
 
 #rega {
@@ -65,7 +89,7 @@ p {
 
 input {
     width: 300px;
-    height: 50px;
+    height: 45px;
     background-color: rgb(213, 220, 242);
     border: rgb(51, 35, 113) solid 2px;
     margin: 5px 0;
@@ -84,6 +108,7 @@ input:focus {
     height: 50px;
     background-color: rgb(221, 176, 204);
     border: rgb(51, 35, 113) solid 2px;
+    border-radius: 5px;
     margin: 5px 0 0 0;
     padding: 0 0 0 5px;
     font-size: 30px;
@@ -115,26 +140,8 @@ input:focus {
 
 /* LOGIN PAGE */
 #login-container {
-    min-height: 100vh;
     background-image: url(../orangegalaxy.jpg);
     background-color: rgb(135, 42, 33);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.error_msg {
-    position: relative;
-    height: auto;
-    color: yellow;
-    text-shadow: 1px 1px 1px rgb(141, 37, 38);
-    font-style: italic;
-    font-size: 25px;
-    margin: 10px 0 0 0;
 }
 
 #h1login {
@@ -158,27 +165,12 @@ input:focus {
     text-shadow: 1px 1px 1px rgb(141, 37, 38);
 }
 
-/* ==== NOTE: add classes to inputs to differentiate styling from register page === */
-input {
-    width: 300px;
-    height: 50px;
-    background-color: rgb(213, 220, 242);
-    border: rgb(141, 37, 38) solid 2px;
-    margin: 5px 0;
-    font-size: 30px;
-    color: rgb(141, 37, 38);
-}
-input:focus {
-    background-color: rgb(198, 197, 245);
-    border: rgb(141, 37, 38) solid 2px;
-    outline: none;
-}
-
 #loginNow {
     width: 309px;
     height: 50px;
     background-color: rgb(254, 186, 83);
     border: rgb(166, 59, 41) solid 2px;
+    border-radius: 5px;
     margin: 5px 0 0 0;
     font-size: 30px;
     color: rgb(166, 59, 41);
@@ -209,26 +201,8 @@ input:focus {
 
 /* PROFILE PAGE */
 #profile-container {
-    min-height: 100vh;
     background-image: url(../greenjar.jpg);
     background-color: rgb(1, 58, 72);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-}
-
-.error_msg {
-    position: relative;
-    height: auto;
-    color: yellow;
-    text-shadow: 1px 1px 1px rgb(1, 58, 72);
-    font-style: italic;
-    font-size: 20px;
-    margin: 10px 0 0 0;
 }
 
 #h1profile {
@@ -247,30 +221,12 @@ input:focus {
     text-shadow: 1px 1px 1px rgb(1, 58, 72);
 }
 
-.hidden {
-    display: none;
-}
-
-input {
-    width: 300px;
-    height: 50px;
-    background-color: rgb(213, 220, 242);
-    border: rgb(51, 35, 113) solid 2px;
-    margin: 5px 0;
-    font-size: 30px;
-    color: rgb(27, 40, 49);
-}
-input:focus {
-    background-color: rgb(198, 197, 245);
-    border: rgb(51, 35, 113) solid 2px;
-    outline: none;
-}
-
 #profNow {
     width: 300px;
     height: 50px;
     background-color: rgb(159, 183, 191);
     border: rgb(1, 58, 72) solid 2px;
+    border-radius: 5px;
     margin: 5px 0 0 0;
     font-size: 30px;
     color: rgb(1, 58, 72);
@@ -298,18 +254,61 @@ input:focus {
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
 }
+/*EDIT PROFILE*/
+#editcontainer {
+    background-image: url(../greenjar.jpg);
+    background-color: rgb(1, 58, 72);
+}
+
+#h1edit {
+    color: rgb(159, 183, 191);
+    text-shadow: 1px 1px 1px rgb(1, 58, 72);
+    text-align: center;
+}
+#h2edit {
+    color: rgb(159, 183, 191);
+    text-shadow: 1px 1px 1px rgb(1, 58, 72);
+    text-align: center;
+}
+
+#editNow {
+    width: 309px;
+    height: 50px;
+    background-color: rgb(159, 183, 191);
+    border: rgb(1, 58, 72) solid 2px;
+    border-radius: 5px;
+    margin: 5px 0 0 0;
+    font-size: 30px;
+    color: rgb(1, 58, 72);
+}
+
+#editNow:focus {
+    outline: lightskyblue;
+    background-color: rgb(137, 164, 173);
+}
+
+#editquote {
+    color: rgb(175, 195, 202);
+    opacity: 90%;
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    margin: 5px 5px;
+}
+
+#editfoot {
+    color: rgb(159, 183, 191);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 /* SIGN PAGE */
 #sign-container {
-    min-height: 100vh;
     background-image: url(../darkgalaxy.jpg);
     background-color: rgb(9, 5, 46);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
 #h1sign {
@@ -318,22 +317,29 @@ input:focus {
     text-align: center;
 }
 
-.error_msg {
-    position: relative;
-    height: auto;
-    color: yellow;
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
-    font-style: italic;
-    font-size: 25px;
-    margin: 10px 0 0 0;
-}
-
 #signquote {
     color: rgb(207, 175, 137);
     opacity: 90%;
     text-shadow: 1px 1px 1px rgb(3, 3, 3);
     text-align: center;
     margin: 80px 5px 10px 5px;
+}
+
+#delSig {
+    width: 300px;
+    height: auto;
+    background-color: rgb(156, 217, 230);
+    border: rgb(53, 59, 91) solid 2px;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    font-size: 20px;
+    color: rgb(9, 5, 46);
+}
+
+#delSig:focus {
+    outline: lightskyblue;
+    background-color: rgb(131, 196, 211);
 }
 
 .hidden {
@@ -393,16 +399,8 @@ input:focus {
 
 /* THANK YOU PAGE */
 #thankyou-container {
-    min-height: 100vh;
     background-image: url(../greenaurora.jpg);
     background-color: rgb(40, 101, 103);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
 #h1thankyou {
@@ -448,16 +446,8 @@ a:hover #h2thankyou {
 
 /* signatories page */
 #signatories-container {
-    min-height: 100vh;
     background-image: url(../pinkstarrysky.jpg);
     background-color: rgb(73, 51, 75);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
 #h1signatories {
@@ -479,6 +469,8 @@ a:hover #h2thankyou {
     color: rgb(33, 20, 39);
     background-color: rgb(245, 211, 232);
     border: 5px solid rgb(134, 98, 125);
+    border-radius: 5px;
+    padding: 5px 0;
     width: 300px;
     min-height: 50px;
     max-height: fit-content;
@@ -499,16 +491,8 @@ a:hover #h2thankyou {
 /* SIGCITY PAGE */
 
 #sigcity-container {
-    min-height: 100vh;
     background-image: url(../pinkstarrysky.jpg);
     background-color: rgb(73, 51, 75);
-    background-size: cover;
-    position: relative;
-    font-family: Arial, Helvetica, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
 }
 
 #h1sigcity {
@@ -530,6 +514,8 @@ a:hover #h2thankyou {
     color: rgb(33, 20, 39);
     background-color: rgb(245, 211, 232);
     border: 5px solid rgb(134, 98, 125);
+    border-radius: 5px;
+    padding: 5px 0;
     width: 300px;
     min-height: 50px;
     max-height: fit-content;
@@ -538,6 +524,30 @@ a:hover #h2thankyou {
 }
 
 #sigcityfoot {
+    color: rgb(250, 207, 213);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    font-size: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/*LOGOUT PAGE*/
+#logoutcontainer {
+    background-image: url(../pinkstarrysky.jpg);
+    background-color: rgb(73, 51, 75);
+}
+
+#logoutquote {
+    font-size: 30px;
+    color: rgb(245, 211, 232);
+    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    text-align: center;
+    padding: 20px;
+}
+
+#logoutfoot {
     color: rgb(250, 207, 213);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;

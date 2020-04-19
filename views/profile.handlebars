@@ -1,4 +1,5 @@
-<div id="profile-container">
+<div id="profile-container" class="container">
+  {{>navbar}}
     <h1 id="h1profile">Add a little more information about yourself</h1>
     
 
@@ -8,9 +9,9 @@
 
     <div id="input_profile">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
-      <p><input name="age" placeholder="age..." ></p>
-      <p><input name="city" placeholder="city..." ></p>
-      <p><input name="homepage" placeholder="http..." ></p>
+      <p><input type="number" name="age" placeholder="age..." ></p>
+      <p><input type="text" name="city" placeholder="city..." ></p>
+      <p><input type="text" name="homepage" placeholder="http..." ></p>
     </div>
 
     
@@ -22,7 +23,7 @@
   <h2 id="h2profile">Prefer not to? <a id="profa" href="/sign"> Click here</a> to sign the petition without saving profile information</h2>
 
 
-<h2 id="profilequote">"***new quote here***."</h2>
+<h2 id="profilequote">"In 900 years of time and space, I’ve never met anyone who wasn’t important"</h2>
 </div>
 
 

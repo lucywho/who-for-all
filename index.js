@@ -224,34 +224,42 @@ app.post("/login", (req, res) => {
 });
 
 app.get("/profile/edit", (req, res) => {
-    if (!req.session) {
-        res.redirect("/");
-        return;
-    }
-    let currentUser = req.session.userId;
-    console.log("232 edit req.session.userId: ", req.session.userId); //returns userId
-
-    db.getProfile(currentUser)
-        .then((results) => {
-            let profile = results.rows[0];
-            res.render("edit", {
-                firstname: profile.user_firstname,
-                lastname: profile.user_lastname,
-                email: profile.user_email,
-                age: profile.user_age,
-                city: profile.user_city,
-                url: profile.user_url,
-                results,
-            });
-        })
-        .catch((err) => {
-            console.log("error in getProfile: ", err);
-            let wentWrong = "Something is wrong. Let's poke it with a stick.";
-            res.render("edit", {
-                layout: "main",
-                wentWrong: wentWrong,
-            });
+    console.log("227 req.session at edit profile: ", req.session.userId);
+    if (!req.session.userId) {
+        let wentWrong =
+            "You are not signed in. Please register or log in to see the rest of the site";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
         });
+        return;
+    } else {
+        let currentUser = req.session.userId;
+        console.log("232 edit req.session.userId: ", req.session.userId); //returns userId
+
+        db.getProfile(currentUser)
+            .then((results) => {
+                let profile = results.rows[0];
+                res.render("edit", {
+                    firstname: profile.user_firstname,
+                    lastname: profile.user_lastname,
+                    email: profile.user_email,
+                    age: profile.user_age,
+                    city: profile.user_city,
+                    url: profile.user_url,
+                    results,
+                });
+            })
+            .catch((err) => {
+                console.log("error in getProfile: ", err);
+                let wentWrong =
+                    "Something is wrong. Let's poke it with a stick.";
+                res.render("edit", {
+                    layout: "main",
+                    wentWrong: wentWrong,
+                });
+            });
+    }
 });
 
 app.post("/profile/edit", (req, res) => {
@@ -326,7 +334,7 @@ app.post("/profile/edit", (req, res) => {
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
         let wentWrong =
-            "You are not yet registered, please fill out the form below";
+            "You are not signed in. Please fill out the form below to register or click the link to login";
         res.render("register", {
             layout: "main",
             wentWrong: wentWrong,
@@ -376,7 +384,12 @@ app.post("/sign", (req, res) => {
 
 app.get("/thankyou", (req, res) => {
     if (!req.session.signatureId || !req.session.userId) {
-        res.redirect("/register");
+        let wentWrong =
+            "You are not signed in. Please fill out the form below to register or click the link to login";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
         return;
     }
     let sigPic;
@@ -415,31 +428,55 @@ app.get("/thankyou", (req, res) => {
         });
 });
 
-app.get("/signatories", (req, res) => {
-    db.getNames()
-        .then((results) => {
-            //console.log("329 getNames results: ", results);
+app.post("/thankyou", (req, res) => {
+    const user_id = req.session.userId;
 
-            if (req.session.signatureId == "") {
-                res.redirect("/register");
-            } else {
-                res.render("signatories", {
-                    layout: "main",
-                    signatories: results,
-                });
-            }
+    db.deleteSignature(user_id)
+        .then(() => {
+            res.render("sign", {
+                layout: "main",
+            });
         })
         .catch((err) => {
-            console.log("err in getNames: ", err);
-            let wentWrong =
-                "There’s something that doesn’t make sense. Let’s go and poke it with a stick.";
-            res.render("signatories", {
-                layout: "main",
-                signatories: list,
-                wentWrong: wentWrong,
-            });
-            return;
+            console.log("error in deleteSig: ", err);
         });
+});
+
+app.get("/signatories", (req, res) => {
+    if (!req.session.userId) {
+        let wentWrong =
+            "You are not signed in. Please fill out the form below to register or click the link to login";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else {
+        db.getNames()
+            .then((results) => {
+                //console.log("329 getNames results: ", results);
+
+                if (req.session.signatureId == "") {
+                    res.redirect("/register");
+                } else {
+                    res.render("signatories", {
+                        layout: "main",
+                        signatories: results,
+                    });
+                }
+            })
+            .catch((err) => {
+                console.log("err in getNames: ", err);
+                let wentWrong =
+                    "There’s something that doesn’t make sense. Let’s go and poke it with a stick.";
+                res.render("signatories", {
+                    layout: "main",
+                    signatories: list,
+                    wentWrong: wentWrong,
+                });
+                return;
+            });
+    }
 });
 
 app.get("/sigs-by-city/:selCity", (req, res) => {
@@ -470,8 +507,8 @@ app.get("/sigs-by-city/:selCity", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
+    res.render("logout", {});
     req.session = null;
-    res.redirect("/login");
 });
 
 //============================//

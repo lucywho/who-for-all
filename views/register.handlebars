@@ -1,10 +1,10 @@
-<div id="register-container">
+<div id="register-container" class="container">
+  {{>navbar}}
     <h1 id="h1register">Welcome to my petition to have Doctor Who shown on all TV channels world-wide</h1>
     <h2 id="h2register">Doctor Who is the Greatest Show on Earth!</h2>
-    <p id="pregister">But sadly available only to viewers of the BBC in the UK, and a small number of streaming and cable services elsewhere. Clearly a programme of such cultural, historical, and even moral importance should be available to all the peoples of earth.<br>
+    <blockquote id="regblock">But sadly available only to viewers of the BBC in the UK, and a small number of streaming and cable services elsewhere. Clearly a programme of such cultural, historical, and even moral importance should be available to all the peoples of earth.
     This petition seeks to right this wrong and ensure that Doctor Who is broadcast on every television channel in the world.<br>
-    Please register below to sign the petition.</p>
-    <h2 id="h2register">Already registered? <a id="rega" href="/login"> Click here</a> to login</h2>
+    Please register below to sign the petition.</blockquote>
 
         <div class="error_msg">{{wentWrong}}</div>
 
@@ -12,8 +12,8 @@
 
     <div id="input_name">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
-      <p><input name="first_name" placeholder="First name..." ></p>
-      <p><input name="last_name" placeholder="Last name..." ></p>
+      <p><input type="text" name="first_name" placeholder="First name..." ></p>
+      <p><input type="text" name="last_name" placeholder="Last name..." ></p>
       <p><input type="email" name="email" placeholder="email address..." ></p>
       <p><input type="password"  name="password" placeholder="choose a password..." ></p>
     
@@ -25,7 +25,10 @@
     <button id="regNow">Register Now</button>
 
   </form>
-<h2 id="registerquote">"First things first, but not necessarily in that order."</h2>
+   <h2 id="h2register">Already registered? <a id="rega" href="/login"> Click here</a> to login</h2>
+  <h2 id="registerquote">"First things first, but not necessarily in that order."</h2>
 </div>
 <footer id="registerfoot">Photo by Miriam Espacio from Pexels</footer>
+
+
 

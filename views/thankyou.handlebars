@@ -1,16 +1,24 @@
-<div id="thankyou-container">
-    {{!-- add first name to thankyou message --}}
+<div id="thankyou-container" class="container">
+    {{>navbar}}
     <h1 id="h1thankyou">Thank you for signing the petition to make Doctor Who available on every broadcast channel</h1>
 
 
     <img src="{{sigPic}}"></img>
+
+    <form action="/thankyou" method="POST" id="deleteSig">
+     <input type="hidden" name="_csrf" value="{{csrfToken}}">
+    <div>
+
+        <button id="delSig">Delete Signature and Try Again</button>
+    </div>
+    </form
 
 
     <a href="/signatories">
         <h2 id="h2thankyou">Click here to see the names of the {{sigTotal}} optimists, hopers of far-flung hopes, and dreamers of impossible dreams who signed this petition.</h2>
     </a>
 
-    <h2 id="tyquote">"In 900 years of time and space, I’ve never met anyone who wasn’t important."</h2>
+    <h2 id="tyquote">"I just want to tell you: you were fantastic.  Absolutely fantastic.<br> And you know what? So was I."</h2>
 
     <div class="error_msg">{{wentWrong}}</div>
 

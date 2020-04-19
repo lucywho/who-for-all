@@ -1,25 +1,25 @@
-
-<div id="sign-container">
+<div id="sign-container" class="container">
+  {{>navbar}}
     <h1 id="h1sign">Please use your mouse to sign in the box below</h1>
     <div class="error_msg">{{wentWrong}}</div>
 
   <form action="/sign" method="POST" id="sign_form">
-  <div id="input_name">
+    <div id="input_name">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-    <div id="sig_pic">
-       <p id="plssgn">Please sign below:</p>
+      <div id="sig_pic">
+         <p id="plssgn">Please sign below:</p>
     
-      <canvas id="canvas">
-      </canvas>
-      <input name="signature" id="save_sig" class="hidden">
+        <canvas id="canvas">
+        </canvas>
+        <input name="signature" id="save_sig" class="hidden">
+      </div>
+
+      <button id="signNow">Sign the Petition</button>
     </div>
-
-    <button id="signNow">Sign the Petition</button>
-
   </form>
-</div>
-<h2 id="signquote">"One day I shall come back. Yes, I shall come back. Until then, there must be no regrets, no tears, no anxieties. Just go forward in all your beliefs and prove to me that I am not mistaken in mine."</h2>
 
+  <h2 id="signquote">"I can't stand the confusion in my mind"</h2>
+</div>
 
 <footer id="signfoot">Photo by Pixabay from Pexels</footer>
