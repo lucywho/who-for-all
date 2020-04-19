@@ -229,18 +229,18 @@ app.get("/profile/edit", (req, res) => {
         return;
     }
     let currentUser = req.session.userId;
-    console.log("232 edit req.session.userId: ", req.session.userId); //returns userId and signatureId
+    console.log("232 edit req.session.userId: ", req.session.userId); //returns userId
 
     db.getProfile(currentUser)
         .then((results) => {
-            let profile = results.rows;
+            let profile = results.rows[0];
             res.render("edit", {
-                firstname: profile[0].user_firstname,
-                lastname: profile[0].user_lastname,
-                email: profile[0].user_email,
-                age: profile[0].user_age,
-                city: profile[0].user_city,
-                url: profile[0].user_url,
+                firstname: profile.user_firstname,
+                lastname: profile.user_lastname,
+                email: profile.user_email,
+                age: profile.user_age,
+                city: profile.user_city,
+                url: profile.user_url,
                 results,
             });
         })
@@ -253,6 +253,43 @@ app.get("/profile/edit", (req, res) => {
             });
         });
 });
+
+app.post("/profile/edit", (req, res) => {
+    const firstname = req.body.first_name;
+    const lastname = req.body.last_name;
+    const email = req.body.email;
+    const password = req.body.password;
+    const age = req.body.age;
+    const city = req.body.city;
+    const url = req.body.homepage;
+
+    let hashpass;
+    let user_id;
+
+    if (password) {
+        hash(password).then((hashpass) => {
+            console.log("hashpass worked", hashpass);
+
+            db.editProfile()
+                .then((results) => {
+                    console.log("edit post worked");
+                    // user_id = results.rows[0].id;
+                    // req.session.userId = user_id;
+                    res.redirect("/signatories");
+                })
+                .catch((err) => {
+                    console.log("err in editProfile: ", err);
+                    let wentWrong =
+                        "Block transfer computation failure, please try again";
+                    res.render("profile/edit", {
+                        layout: "main",
+                        wentWrong: wentWrong,
+                    });
+                    return;
+                });
+        }); // end of hashpass then
+    } //end of if(password)
+}); //end of app.post
 
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
