@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
+exports.app = app;
+
 const db = require("./db.js");
 const handlebars = require("express-handlebars");
-const cookieSession = require("cookie-session"); //delete cookieParser from rest of code
+
+const cookieSession = require("cookie-session");
 const csurf = require("csurf");
-const { hash, compare } = require("./bc.js");
+
+const profileRouter = require("./routes/profile");
+
+const { requireSignature, requireNoSignature } = require("./middleware");
 
 //==set view engine
 app.engine("handlebars", handlebars());
@@ -38,300 +44,29 @@ app.use((req, res, next) => {
     next();
 });
 
-//==routes
+//checks userId cookie for all pages (except register and login) CHECK LOGIC
+app.use((req, res, next) => {
+    console.log("checking for userID on every request");
+    if (!req.session.userId && req.url != "/register" && req.url != "/login") {
+        let wentWrong =
+            "You need to be registered and logged in to access the full site";
+        res.render("register", {
+            wentWrong: wentWrong,
+        });
+        return;
+    } else {
+        next();
+    }
+});
+
+//===ROUTES===
 app.get("/", (req, res) => {
     res.redirect("/register");
 });
+//registration and login in auth.js
+require("./routes/auth");
 
-app.get("/register", (req, res) => {
-    if (!req.session) {
-        res.redirect("/");
-        return;
-    }
-    res.render("register", {
-        layout: "main",
-    });
-});
-
-app.post("/register", (req, res) => {
-    console.log("post register running");
-    //capture inputs
-    const first_name = req.body.first_name;
-    const last_name = req.body.last_name;
-    const email = req.body.email;
-    const password = req.body.password;
-    let user_id;
-
-    //check all inputs and redo page if not
-    if (!first_name || !last_name || !email || !password) {
-        console.log("register: missing inputs");
-
-        let wentWrong =
-            "Please reverse the polarity of the neutron flow and try again";
-        res.render("register", {
-            layout: "main",
-            wentWrong: wentWrong,
-        });
-        return;
-    }
-
-    // hash the password and add inputs to user table
-    hash(password).then((hashpass) => {
-        console.log("hashpass worked", hashpass);
-        db.addName(first_name, last_name, email, hashpass)
-            .then((results) => {
-                console.log("register post worked");
-                user_id = results.rows[0].id;
-                req.session.userId = user_id;
-                res.redirect("/profile");
-            })
-            .catch((err) => {
-                console.log("err in addName: ", err);
-                let wentWrong =
-                    "Block transfer computation failure, please try again";
-                res.render("register", {
-                    layout: "main",
-                    wentWrong: wentWrong,
-                });
-                return;
-            });
-    });
-});
-
-app.get("/profile", (req, res) => {
-    res.render("profile", {
-        layout: "main",
-    });
-});
-
-app.post("/profile", (req, res) => {
-    console.log("post profile running");
-    //catch data from form,
-    const age = req.body.age;
-    const city = req.body.city;
-    const homepage = req.body.homepage;
-    console.log("profile inputs: ", age, city, homepage);
-
-    //check that website url starts with http or https
-    if (homepage !== "" && !homepage.startsWith("http")) {
-        let wentWrong =
-            "Please ensure that your homepage address is a valid url or leave blank";
-        res.render("profile", {
-            layout: "main",
-            wentWrong: wentWrong,
-        });
-    } else {
-        //insert into new database table, redirect to sign
-        let user_id = req.session.userId;
-        db.addProfile(age, city, homepage, user_id)
-            .then(() => {
-                console.log("profile post works");
-                // user_id = results.rows[0].id;
-                // req.session.userId = user_id;
-                res.redirect("/sign");
-            })
-            .catch((err) => {
-                console.log("134 error in addProfile:", err);
-                let wentWrong =
-                    "Something is wrong. Let's poke it with a stick.";
-                res.render("profile", {
-                    layout: "main",
-                    wentWrong: wentWrong,
-                });
-            });
-    }
-});
-
-app.get("/login", (req, res) => {
-    if (!req.session) {
-        res.redirect("/");
-        return;
-    }
-
-    res.render("login", {
-        layout: "main",
-    });
-});
-
-app.post("/login", (req, res) => {
-    //capture inputs - works
-    const logemail = req.body.logemail;
-    const logpassword = req.body.logpassword;
-    let hashpass;
-    let user_id;
-    //console.log("line 129 constants: ", logemail, logpassword);
-
-    //check inputs complete - works
-    if (!logemail || !logpassword) {
-        let wentWrong = "Please complete both fields";
-        res.render("login", {
-            layout: "main",
-            wentWrong: wentWrong,
-        });
-        return;
-    }
-
-    db.getPassword(logemail)
-        .then((results) => {
-            let hashpass = results.rows[0].password;
-            console.log("144 results", hashpass);
-
-            compare(logpassword, hashpass)
-                .then((matchValue) => {
-                    console.log("matchValue in login: ", matchValue);
-                    if (!matchValue) {
-                        let wentWrong =
-                            "Please check your email address and password and try again.";
-                        res.render("login", {
-                            layout: "main",
-                            wentWrong: wentWrong,
-                        });
-                        return;
-                    } else {
-                        user_id = results.rows[0].id;
-                        req.session.userId = user_id;
-                        console.log("193 user_id", req.session.userId);
-
-                        db.checkSig(req.session.userId)
-                            .then((results) => {
-                                if (results.rows[0] !== undefined) {
-                                    sig_id = results.rows[0].id;
-                                    req.session.signatureId = sig_id;
-                                    console.log(
-                                        "201 sig_id",
-                                        req.session.signatureId
-                                    );
-                                    res.redirect("/thankyou");
-                                } else {
-                                    res.render("sign", {
-                                        layout: "main",
-                                    });
-                                    return;
-                                }
-                            })
-                            .catch((err) => {
-                                console.log("213 error in checkSig: ", err);
-                            });
-                    }
-                })
-                .catch((err) => {
-                    console.log("218 error in getPassword: ", err);
-                });
-        })
-        .catch((err) => {
-            console.log("222 err in POST login : ", err);
-        });
-});
-
-app.get("/profile/edit", (req, res) => {
-    console.log("227 req.session at edit profile: ", req.session.userId);
-    if (!req.session.userId) {
-        let wentWrong =
-            "You are not signed in. Please register or log in to see the rest of the site";
-        res.render("register", {
-            layout: "main",
-            wentWrong: wentWrong,
-        });
-        return;
-    } else {
-        let currentUser = req.session.userId;
-        console.log("232 edit req.session.userId: ", req.session.userId); //returns userId
-
-        db.getProfile(currentUser)
-            .then((results) => {
-                let profile = results.rows[0];
-                res.render("edit", {
-                    firstname: profile.user_firstname,
-                    lastname: profile.user_lastname,
-                    email: profile.user_email,
-                    age: profile.user_age,
-                    city: profile.user_city,
-                    url: profile.user_url,
-                    results,
-                });
-            })
-            .catch((err) => {
-                console.log("error in getProfile: ", err);
-                let wentWrong =
-                    "Something is wrong. Let's poke it with a stick.";
-                res.render("edit", {
-                    layout: "main",
-                    wentWrong: wentWrong,
-                });
-            });
-    }
-});
-
-app.post("/profile/edit", (req, res) => {
-    const firstname = req.body.first_name;
-    const lastname = req.body.last_name;
-    const email = req.body.email;
-    const password = req.body.password;
-    const age = req.body.age;
-    const city = req.body.city;
-    const url = req.body.homepage;
-
-    let user_id = req.session.userId;
-
-    if (password) {
-        hash(password)
-            .then((hashpass) => {
-                console.log("hashpass worked", hashpass);
-
-                db.editUserInfoPass(
-                    firstname,
-                    lastname,
-                    email,
-                    hashpass,
-                    user_id
-                )
-                    .then(() => {
-                        db.editUserProfile(age, city, url, user_id);
-                    })
-                    .then((results) => {
-                        console.log("edit post worked");
-                        res.redirect("/signatories");
-                    })
-                    .catch((err) => {
-                        console.log("err in editUserInfoPass: ", err);
-                        // let wentWrong =
-                        //     "Block transfer computation failure, please try again";
-                        // res.render("edit", {
-                        //     layout: "main",
-                        //     wentWrong: wentWrong,
-                        // });
-                        //return;
-                    });
-            })
-            .catch((err) => {
-                console.log("err in editUserInfoPass: ", err);
-            }); // end of then.hashpass.catch
-    } //end of if(password)
-    else {
-        db.editUserInfo(firstname, lastname, email, user_id)
-            .then(() => {
-                db.editUserProfile(age, city, url, user_id);
-            })
-            .then((results) => {
-                console.log("edit post worked");
-                // user_id = results.rows[0].id;
-                // req.session.userId = user_id;
-                res.redirect("/signatories");
-            })
-            .catch((err) => {
-                console.log("err in editUserInfo: ", err);
-                // let wentWrong =
-                //     "Block transfer computation failure, please try again";
-                // res.render("edit", {
-                //     layout: "main",
-                //     wentWrong: wentWrong,
-                // });
-                //return;
-            });
-    } //end of else
-}); //end of app.post
-
-app.get("/sign", (req, res) => {
+app.get("/sign", requireNoSignature, (req, res) => {
     if (!req.session.userId) {
         let wentWrong =
             "You are not signed in. Please fill out the form below to register or click the link to login";
@@ -347,7 +82,10 @@ app.get("/sign", (req, res) => {
     }
 });
 
-app.post("/sign", (req, res) => {
+//profile add and edit in profile.js
+app.use("/profile", profileRouter);
+
+app.post("/sign", requireNoSignature, (req, res) => {
     const signature = req.body.signature;
 
     if (!signature) {
@@ -382,7 +120,7 @@ app.post("/sign", (req, res) => {
         });
 });
 
-app.get("/thankyou", (req, res) => {
+app.get("/thankyou", requireSignature, (req, res) => {
     if (!req.session.signatureId || !req.session.userId) {
         let wentWrong =
             "You are not signed in. Please fill out the form below to register or click the link to login";
@@ -428,7 +166,7 @@ app.get("/thankyou", (req, res) => {
         });
 });
 
-app.post("/thankyou", (req, res) => {
+app.post("/thankyou", requireSignature, (req, res) => {
     const user_id = req.session.userId;
 
     db.deleteSignature(user_id)
@@ -442,7 +180,7 @@ app.post("/thankyou", (req, res) => {
         });
 });
 
-app.get("/signatories", (req, res) => {
+app.get("/signatories", requireSignature, (req, res) => {
     if (!req.session.userId) {
         let wentWrong =
             "You are not signed in. Please fill out the form below to register or click the link to login";
@@ -479,7 +217,7 @@ app.get("/signatories", (req, res) => {
     }
 });
 
-app.get("/sigs-by-city/:selCity", (req, res) => {
+app.get("/sigs-by-city/:selCity", requireSignature, (req, res) => {
     const selCity = req.params.selCity;
     console.log("sel_city: ", selCity);
 
