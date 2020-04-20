@@ -3,6 +3,11 @@
     padding: 0;
 }
 
+body {
+    margin: 0;
+    height: 100vh;
+}
+
 .container {
     min-height: 100vh;
     background-size: cover;
@@ -12,43 +17,58 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+    padding: 5px;
+}
+
+.navcontainer {
+    background-color: rgb(2, 3, 8);
+    /* background: linear-gradient(
+        0.25turn,
+        rgb(2, 3, 8),
+        rgb(1, 58, 72),
+        rgb(35, 113, 117),
+        rgb(28, 15, 32),
+        rgb(86, 31, 14)
+    ); */
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
 
 #navbar {
-    color: yellow;
+    color: rgb(217, 191, 149);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     font-size: 20px;
     font-weight: bold;
-    margin-top: 10px;
+    padding: 5px 0;
 }
 
 #navbar a {
     color: yellow;
 }
-#navbar a:hover {
+#navbar a:focus {
     color: rgb(255, 120, 0);
 }
 
-#navbar a:focus {
+#navbar a:hover {
     color: rgb(255, 160, 0);
 }
-
-/* #navbar a:visited {
-    color: rgb(255, 145, 0);
-} */
 
 h1 {
     font-size: 30px;
 }
 h2 {
-    font-size: 25px;
+    font-size: 20px;
 }
 
 .error_msg {
     position: relative;
     height: auto;
     color: yellow;
-    text-shadow: 1px 1px 1px red;
+    text-shadow: 1px 1px 1px rgb(255, 174, 0);
     font-style: italic;
     font-size: 18px;
     margin: 10px 0 0 0;
@@ -56,7 +76,12 @@ h2 {
 
 /* REGISTER PAGE */
 #register-container {
-    background-image: url(../darkbluegalaxy.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 10%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../darkbluegalaxy.jpg);
     background-color: rgb(9, 5, 46);
 }
 
@@ -69,6 +94,16 @@ h2 {
     color: rgb(213, 220, 242);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
+}
+#h2register a {
+    color: yellow;
+}
+#h2register a:focus {
+    color: rgb(255, 120, 0);
+}
+
+#h2register a:hover {
+    color: rgb(255, 160, 0);
 }
 
 #regblock {
@@ -89,7 +124,7 @@ h2 {
 
 input {
     width: 300px;
-    height: 45px;
+    height: 40px;
     background-color: rgb(213, 220, 242);
     border: rgb(51, 35, 113) solid 2px;
     margin: 5px 0;
@@ -140,7 +175,12 @@ input:focus {
 
 /* LOGIN PAGE */
 #login-container {
-    background-image: url(../orangegalaxy.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../orangegalaxy.jpg);
     background-color: rgb(135, 42, 33);
 }
 
@@ -201,7 +241,12 @@ input:focus {
 
 /* PROFILE PAGE */
 #profile-container {
-    background-image: url(../greenjar.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../greenjar.jpg);
     background-color: rgb(1, 58, 72);
 }
 
@@ -256,7 +301,12 @@ input:focus {
 }
 /*EDIT PROFILE*/
 #editcontainer {
-    background-image: url(../greenjar.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../greenjar.jpg);
     background-color: rgb(1, 58, 72);
 }
 
@@ -307,7 +357,12 @@ input:focus {
 
 /* SIGN PAGE */
 #sign-container {
-    background-image: url(../darkgalaxy.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../darkgalaxy.jpg);
     background-color: rgb(9, 5, 46);
 }
 
@@ -359,7 +414,7 @@ input:focus {
     color: rgb(217, 191, 149);
     text-shadow: 1px 1px 1px rgb(3, 3, 3);
     font-size: 25px;
-    margin: 0 0 0 5px;
+
     font-style: italic;
     font-weight: bold;
 }
@@ -373,7 +428,7 @@ input:focus {
 }
 
 #signNow {
-    width: 100%;
+    width: 101%;
     height: 50px;
     background-color: rgb(197, 191, 199);
     border: rgb(23, 22, 38) solid 2px;
@@ -399,7 +454,12 @@ input:focus {
 
 /* THANK YOU PAGE */
 #thankyou-container {
-    background-image: url(../greenaurora.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../greenaurora.jpg);
     background-color: rgb(40, 101, 103);
 }
 
@@ -446,7 +506,12 @@ a:hover #h2thankyou {
 
 /* signatories page */
 #signatories-container {
-    background-image: url(../pinkstarrysky.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../pinkstarrysky.jpg);
     background-color: rgb(73, 51, 75);
 }
 
@@ -491,7 +556,12 @@ a:hover #h2thankyou {
 /* SIGCITY PAGE */
 
 #sigcity-container {
-    background-image: url(../pinkstarrysky.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../pinkstarrysky.jpg);
     background-color: rgb(73, 51, 75);
 }
 
@@ -535,7 +605,12 @@ a:hover #h2thankyou {
 
 /*LOGOUT PAGE*/
 #logoutcontainer {
-    background-image: url(../pinkstarrysky.jpg);
+    background-image: linear-gradient(
+            rgba(2, 3, 8, 1) 1%,
+            rgba(2, 3, 8, 0.3) 15%,
+            rgb(2, 3, 8, 0)
+        ),
+        url(../pinkstarrysky.jpg);
     background-color: rgb(73, 51, 75);
 }
 

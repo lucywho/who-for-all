@@ -1,8 +1,9 @@
 const express = require("express");
 const app = express();
+exports.app = app;
 const db = require("./db.js");
 const handlebars = require("express-handlebars");
-const cookieSession = require("cookie-session"); //delete cookieParser from rest of code
+const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const { hash, compare } = require("./bc.js");
 
@@ -24,6 +25,7 @@ app.use(
     cookieSession({
         secret: `Like Fire and Ice`,
         maxAge: 1000 * 60 * 60 * 24 * 14,
+        //creates req.session
     })
 );
 
@@ -55,6 +57,7 @@ app.get("/register", (req, res) => {
 
 app.post("/register", (req, res) => {
     console.log("post register running");
+    console.log("req session: ", req.session);
     //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
@@ -332,10 +335,23 @@ app.post("/profile/edit", (req, res) => {
 }); //end of app.post
 
 app.get("/sign", (req, res) => {
+    console.log(
+        "338 sign req.session userId and signatureId: ",
+        req.session.userId,
+        req.session.signatureId
+    );
     if (!req.session.userId) {
         let wentWrong =
             "You are not signed in. Please fill out the form below to register or click the link to login";
         res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else if (!req.session.signatureId) {
+        let wentWrong =
+            "You have already signed the petition. Click below to change your signature. ";
+        res.render("thankyou", {
             layout: "main",
             wentWrong: wentWrong,
         });
@@ -513,6 +529,9 @@ app.get("/logout", (req, res) => {
 
 //============================//
 
-app.listen(process.env.PORT || 8080, () =>
-    console.log("petition server running")
-);
+if (require.main === module) {
+    app.listen(process.env.PORT || 8080, () =>
+        console.log("petition server running")
+    );
+}
+//if block prevents testing software from starting server
