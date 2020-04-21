@@ -50,10 +50,19 @@ app.get("/register", (req, res) => {
     if (!req.session) {
         res.redirect("/");
         return;
+    } else if (req.session.userId) {
+        let wentWrong =
+            "You are already logged in. To register in as another user, please first log out";
+        res.render("register", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else {
+        res.render("register", {
+            layout: "main",
+        });
     }
-    res.render("register", {
-        layout: "main",
-    });
 });
 
 app.post("/register", (req, res) => {
@@ -105,11 +114,19 @@ app.get("/login", (req, res) => {
     if (!req.session) {
         res.redirect("/");
         return;
+    } else if (req.session.userId) {
+        let wentWrong =
+            "You are already logged in. To log in as another user, please first log out";
+        res.render("login", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else {
+        res.render("login", {
+            layout: "main",
+        });
     }
-
-    res.render("login", {
-        layout: "main",
-    });
 });
 
 app.post("/login", (req, res) => {
