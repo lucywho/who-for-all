@@ -32,10 +32,10 @@ a:hover {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    padding: 0 5px;
 }
 
 .navcontainer {
+    min-height: 5vh;
     background-color: rgb(2, 3, 8);
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
@@ -43,14 +43,12 @@ a:hover {
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
-    max-height: 5vh;
 }
 
 #navbar {
     color: rgb(231, 211, 122);
     font-size: 20px;
     font-weight: bold;
-    padding: 5px 0;
 }
 
 #navbar a {
@@ -618,11 +616,11 @@ input:focus {
 #logoutcontainer {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
-            rgba(2, 3, 8, 0.3) 15%,
+            rgba(2, 3, 8, 0.3) 10%,
             rgb(2, 3, 8, 0)
         ),
-        url(../pinkstarrysky.jpg);
-    background-color: rgb(73, 51, 75);
+        url(../darkbluegalaxy.jpg);
+    background-color: rgb(9, 5, 46);
 }
 
 #logoutquote {
@@ -635,7 +633,7 @@ input:focus {
 }
 
 #logoutfoot {
-    color: rgb(250, 207, 213);
+    color: rgb(245, 211, 232);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     position: fixed;
     bottom: 0;
