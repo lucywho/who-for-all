@@ -11,6 +11,18 @@ p {
     font-size: 18px;
 }
 
+a {
+    text-decoration: none;
+}
+
+a:focus {
+    color: rgb(255, 120, 0);
+}
+
+a:hover {
+    color: rgb(255, 160, 0);
+}
+
 .container {
     min-height: 95vh;
     background-size: cover;
@@ -195,11 +207,13 @@ input:focus {
     color: rgb(254, 251, 133);
     text-shadow: 1px 1px 1px rgb(141, 37, 38);
     text-align: center;
+    font-weight: bold;
 }
 
 #logina {
-    color: lightblue;
+    color: rgb(173, 230, 227);
     text-shadow: 1px 1px 1px rgb(141, 37, 38);
+    font-weight: bold;
 }
 
 #loginNow {
