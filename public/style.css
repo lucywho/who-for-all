@@ -7,47 +7,43 @@ body {
     margin: 0;
     height: 100vh;
 }
+p {
+    font-size: 18px;
+}
 
 .container {
-    min-height: 97vh;
+    min-height: 95vh;
     background-size: cover;
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
-    padding: 5px;
+    justify-content: space-evenly;
+    padding: 0 5px;
 }
 
 .navcontainer {
     background-color: rgb(2, 3, 8);
-    /* background: linear-gradient(
-        0.25turn,
-        rgb(2, 3, 8),
-        rgb(1, 58, 72),
-        rgb(35, 113, 117),
-        rgb(28, 15, 32),
-        rgb(86, 31, 14)
-    ); */
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-around;
+    max-height: 5vh;
 }
 
 #navbar {
-    color: rgb(217, 191, 149);
-    text-shadow: 1px 1px 1px rgb(27, 40, 49);
+    color: rgb(231, 211, 122);
     font-size: 20px;
     font-weight: bold;
     padding: 5px 0;
 }
 
 #navbar a {
-    color: yellow;
+    color: rgb(231, 211, 122);
+    text-decoration: none;
 }
 #navbar a:focus {
     color: rgb(255, 120, 0);
@@ -67,10 +63,10 @@ h2 {
 .error_msg {
     position: relative;
     height: auto;
-    color: yellow;
-    text-shadow: 1px 1px 1px rgb(255, 174, 0);
+    color: rgb(231, 191, 3);
+    text-shadow: 1px 1px 1px red;
     font-style: italic;
-    font-size: 18px;
+    font-size: 20px;
     margin: 10px 0 0 0;
 }
 
@@ -86,17 +82,18 @@ h2 {
 }
 
 #h1register {
-    color: rgb(213, 220, 242);
+    color: rgb(201, 210, 241);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
 }
 #h2register {
-    color: rgb(213, 220, 242);
+    color: rgb(231, 191, 3);
+    /* color: rgb(213, 210, 260); */
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
 }
 #h2register a {
-    color: yellow;
+    color: rgb(231, 191, 3);
 }
 #h2register a:focus {
     color: rgb(255, 120, 0);
@@ -114,7 +111,7 @@ h2 {
 }
 
 #rega {
-    color: yellow;
+    color: rgb(231, 191, 3);
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
 }
 
@@ -127,7 +124,7 @@ input {
     height: 40px;
     background-color: rgb(213, 220, 242);
     border: rgb(51, 35, 113) solid 2px;
-    margin: 5px 0;
+    margin: 2px 0;
     padding: 0 0 0 5px;
     font-size: 30px;
     color: rgb(27, 40, 49);
@@ -414,21 +411,20 @@ input:focus {
     color: rgb(217, 191, 149);
     text-shadow: 1px 1px 1px rgb(3, 3, 3);
     font-size: 25px;
-
     font-style: italic;
     font-weight: bold;
 }
 
 #canvas {
-    width: 100%;
-    height: 150px;
+    width: 80%;
+    height: 175px;
     border: rgb(23, 22, 38) solid 2px;
     background-color: rgb(222, 215, 224);
     margin: 5px 0 0 0;
 }
 
 #signNow {
-    width: 101%;
+    width: 81%;
     height: 50px;
     background-color: rgb(197, 191, 199);
     border: rgb(23, 22, 38) solid 2px;
@@ -485,11 +481,12 @@ input:focus {
     margin: 30px 30px;
 }
 
-a {
+#h2thankyou a {
+    color: rgb(172, 224, 241);
     text-decoration: none;
 }
 
-a:hover #h2thankyou {
+#h2thankyou a:hover {
     opacity: 90%;
     color: rgb(198, 197, 245);
 }
@@ -617,6 +614,7 @@ a:hover #h2thankyou {
 #logoutquote {
     font-size: 30px;
     color: rgb(245, 211, 232);
+    opacity: 80%;
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
     padding: 20px;

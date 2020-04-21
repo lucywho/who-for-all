@@ -1,18 +1,17 @@
 <div id="sign-container" class="container">
-    <h1 id="h1sign">Please use your mouse to sign in the box below</h1>
+    <h1 id="h1sign">Thank you for registering. Please sign the petition to bring the magic of Doctor Who to the world.</h1>
     <div class="error_msg">{{wentWrong}}</div>
 
   <form action="/sign" method="POST" id="sign_form">
     <div id="input_name">
       <input type="hidden" name="_csrf" value="{{csrfToken}}">
 
-      <div id="sig_pic">
          <p id="plssgn">Please sign below:</p>
     
         <canvas id="canvas">
         </canvas>
         <input name="signature" id="save_sig" class="hidden">
-      </div>
+      
 
       <button id="signNow">Sign the Petition</button>
     </div>
