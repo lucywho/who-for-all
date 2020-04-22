@@ -289,7 +289,15 @@ app.post("/profile/edit", (req, res) => {
 
     let user_id = req.session.userId;
 
-    if (password) {
+    if (homepage !== "" && !homepage.startsWith("http")) {
+        let wentWrong =
+            "Please ensure that your homepage address is a valid url or leave blank";
+        res.render("profile", {
+            layout: "main",
+            wentWrong: wentWrong,
+        });
+        return;
+    } else if (password) {
         hash(password)
             .then((hashpass) => {
                 console.log("hashpass worked", hashpass);

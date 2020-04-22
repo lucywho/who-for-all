@@ -25,6 +25,7 @@ canvas.addEventListener("mouseup", saveSignature);
 function newPosition(event) {
     position.x = event.clientX - bound.left;
     position.y = event.clientY - bound.top;
+
     //console.log("x, y: ", position.x, position.y);
 }
 
