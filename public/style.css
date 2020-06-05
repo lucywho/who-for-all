@@ -80,7 +80,8 @@ h2 {
     margin: 10px 0 0 0;
 }
 
-/* REGISTER PAGE */
+/* REGISTER */
+
 #register-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -98,7 +99,6 @@ h2 {
 }
 #h2register {
     color: rgb(231, 191, 3);
-    /* color: rgb(213, 210, 260); */
     text-shadow: 1px 1px 1px rgb(27, 40, 49);
     text-align: center;
 }
@@ -180,7 +180,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* LOGIN PAGE */
+/* LOGIN */
+
 #login-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -248,7 +249,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* PROFILE PAGE */
+/* PROFILE */
+
 #profile-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -308,7 +310,8 @@ input:focus {
     font-size: 10px;
     font-family: Arial, Helvetica, sans-serif;
 }
-/*EDIT PROFILE*/
+/* EDIT */
+
 #editcontainer {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -364,7 +367,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* SIGN PAGE */
+/* SIGN */
+
 #sign-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -460,7 +464,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* THANK YOU PAGE */
+/* THANK YOU */
+
 #thankyou-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -513,7 +518,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* signatories page */
+/* SIGNATORIES */
+
 #signatories-container {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,
@@ -562,7 +568,7 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/* SIGCITY PAGE */
+/* SIGS-BY-CITY */
 
 #sigcity-container {
     background-image: linear-gradient(
@@ -612,7 +618,8 @@ input:focus {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-/*LOGOUT PAGE*/
+/* LOGOUT */
+
 #logoutcontainer {
     background-image: linear-gradient(
             rgba(2, 3, 8, 1) 1%,

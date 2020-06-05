@@ -1,19 +1,13 @@
-// canvas / signature code goes here
-console.log("javascript attached");
-
 let canvas = document.getElementById("canvas");
 
 let context = canvas.getContext("2d");
 
 let bound = canvas.getBoundingClientRect();
 
-//starting position
 let position = {
     x: 0,
     y: 0,
 };
-
-//event listeners
 
 canvas.addEventListener("mouseenter", newPosition);
 
@@ -21,15 +15,11 @@ canvas.addEventListener("mousemove", drawSignature);
 
 canvas.addEventListener("mouseup", saveSignature);
 
-//work out new position
 function newPosition(event) {
     position.x = event.clientX - bound.left;
     position.y = event.clientY - bound.top;
-
-    //console.log("x, y: ", position.x, position.y);
 }
 
-//draw lines
 function drawSignature(event) {
     if (event.buttons !== 1) {
         return;
@@ -43,7 +33,6 @@ function drawSignature(event) {
     context.stroke();
 }
 
-//save canvas image to save-sig field
 function saveSignature() {
     let data = canvas.toDataURL();
 

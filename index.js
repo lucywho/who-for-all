@@ -22,23 +22,19 @@ app.use(
     })
 );
 
-//set cookie object
+//==set cookie object
 app.use(
     cookieSession({
         secret: `Like Fire and Ice`,
         maxAge: 1000 * 60 * 60 * 24 * 14,
-        //creates req.session
     })
 );
 
 app.use(csurf());
 
 app.use((req, res, next) => {
-    //prevent website appearing in frames (modern browsers only)
     res.setHeader("X-Frame-Options", "deny");
-    //automatically passes token to all res.render code
     res.locals.csrfToken = req.csrfToken();
-    //NOTE (can use res.locals to pass anything to all templates)
     next();
 });
 
@@ -66,18 +62,13 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", (req, res) => {
-    console.log("post register running");
-    //capture inputs
     const first_name = req.body.first_name;
     const last_name = req.body.last_name;
     const email = req.body.email;
     const password = req.body.password;
     let user_id;
 
-    //check all inputs and redo page if not
     if (!first_name || !last_name || !email || !password) {
-        console.log("register: missing inputs");
-
         let wentWrong =
             "Please reverse the polarity of the neutron flow and try again";
         res.render("register", {
@@ -87,12 +78,9 @@ app.post("/register", (req, res) => {
         return;
     }
 
-    // hash the password and add inputs to user table
     hash(password).then((hashpass) => {
-        console.log("hashpass worked", hashpass);
         db.addName(first_name, last_name, email, hashpass)
             .then((results) => {
-                console.log("register post worked");
                 user_id = results.rows[0].id;
                 req.session.userId = user_id;
                 res.redirect("/profile");
@@ -132,7 +120,6 @@ app.get("/login", (req, res) => {
 app.post("/login", (req, res) => {
     const logemail = req.body.logemail;
     const logpassword = req.body.logpassword;
-    let hashpass;
     let user_id;
 
     if (!logemail || !logpassword) {
@@ -147,11 +134,9 @@ app.post("/login", (req, res) => {
     db.getPassword(logemail)
         .then((results) => {
             let hashpass = results.rows[0].password;
-            console.log("144 results", hashpass);
 
             compare(logpassword, hashpass)
                 .then((matchValue) => {
-                    console.log("matchValue in login: ", matchValue);
                     if (!matchValue) {
                         let wentWrong =
                             "Please check your email address and password and try again.";
@@ -163,17 +148,12 @@ app.post("/login", (req, res) => {
                     } else {
                         user_id = results.rows[0].id;
                         req.session.userId = user_id;
-                        console.log("193 user_id", req.session.userId);
 
                         db.checkSig(req.session.userId)
                             .then((results) => {
                                 if (results.rows[0] !== undefined) {
                                     sig_id = results.rows[0].id;
                                     req.session.signatureId = sig_id;
-                                    console.log(
-                                        "201 sig_id",
-                                        req.session.signatureId
-                                    );
                                     res.redirect("/thankyou");
                                 } else {
                                     res.render("sign", {
@@ -183,16 +163,16 @@ app.post("/login", (req, res) => {
                                 }
                             })
                             .catch((err) => {
-                                console.log("213 error in checkSig: ", err);
+                                console.log("error in checkSig: ", err);
                             });
                     }
                 })
                 .catch((err) => {
-                    console.log("218 error in getPassword: ", err);
+                    console.log("error in getPassword: ", err);
                 });
         })
         .catch((err) => {
-            console.log("222 err in POST login : ", err);
+            console.log("err in POST login : ", err);
         });
 });
 app.get("/profile", (req, res) => {
@@ -202,14 +182,10 @@ app.get("/profile", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-    console.log("post profile running");
-    //catch data from form,
     const age = req.body.age;
     const city = req.body.city;
     const homepage = req.body.homepage;
-    console.log("profile inputs: ", age, city, homepage);
 
-    //check that website url starts with http or https
     if (homepage !== "" && !homepage.startsWith("http")) {
         let wentWrong =
             "Please ensure that your homepage address is a valid url or leave blank";
@@ -218,17 +194,13 @@ app.post("/profile", (req, res) => {
             wentWrong: wentWrong,
         });
     } else {
-        //insert into new database table, redirect to sign
         let user_id = req.session.userId;
         db.addProfile(age, city, homepage, user_id)
             .then(() => {
-                console.log("profile post works");
-                // user_id = results.rows[0].id;
-                // req.session.userId = user_id;
                 res.redirect("/sign");
             })
             .catch((err) => {
-                console.log("134 error in addProfile:", err);
+                console.log(err);
                 let wentWrong =
                     "Something is wrong. Let's poke it with a stick.";
                 res.render("profile", {
@@ -240,7 +212,6 @@ app.post("/profile", (req, res) => {
 });
 
 app.get("/profile/edit", (req, res) => {
-    console.log("req.session at edit profile: ", req.session.userId);
     if (!req.session.userId) {
         let wentWrong =
             "You are not signed in. Please register or log in to see the rest of the site";
@@ -251,7 +222,6 @@ app.get("/profile/edit", (req, res) => {
         return;
     } else {
         let currentUser = req.session.userId;
-        console.log("232 edit req.session.userId: ", req.session.userId); //returns userId
 
         db.getProfile(currentUser)
             .then((results) => {
@@ -300,8 +270,6 @@ app.post("/profile/edit", (req, res) => {
     } else if (password) {
         hash(password)
             .then((hashpass) => {
-                console.log("hashpass worked", hashpass);
-
                 db.editUserInfoPass(
                     firstname,
                     lastname,
@@ -313,7 +281,6 @@ app.post("/profile/edit", (req, res) => {
                         db.editUserProfile(age, city, url, user_id);
                     })
                     .then((results) => {
-                        console.log("edit post worked");
                         res.redirect("/signatories");
                     })
                     .catch((err) => {
@@ -330,30 +297,19 @@ app.post("/profile/edit", (req, res) => {
             .catch((err) => {
                 console.log("err in editUserInfoPass: ", err);
             }); // end of then.hashpass.catch
-    } //end of if(password)
-    else {
+    } else {
         db.editUserInfo(firstname, lastname, email, user_id)
             .then(() => {
                 db.editUserProfile(age, city, url, user_id);
             })
             .then((results) => {
-                console.log("edit post worked");
-                // user_id = results.rows[0].id;
-                // req.session.userId = user_id;
                 res.redirect("/signatories");
             })
             .catch((err) => {
                 console.log("err in editUserInfo: ", err);
-                // let wentWrong =
-                //     "Block transfer computation failure, please try again";
-                // res.render("edit", {
-                //     layout: "main",
-                //     wentWrong: wentWrong,
-                // });
-                //return;
             });
-    } //end of else
-}); //end of app.post
+    }
+});
 
 app.get("/sign", (req, res) => {
     if (!req.session.userId) {
@@ -413,17 +369,12 @@ app.post("/sign", (req, res) => {
 
     db.addSig(signature, req.session.userId)
         .then((results) => {
-            console.log("addSig worked");
             sig_id = results.rows[0].id;
             req.session.signatureId = sig_id;
-            console.log(
-                "line 211 sig id with results.id",
-                req.session.signatureId
-            );
+
             res.redirect("/thankyou");
         })
         .catch((err) => {
-            console.log("error in index.js addSig: ", err);
             let wentWrong =
                 "Block transfer computation failure, please try again";
             res.render("sign", {
@@ -449,10 +400,7 @@ app.get("/thankyou", (req, res) => {
 
     db.sigTotal()
         .then((results) => {
-            //console.log("results in sigTotal: ", results);
             sigTotal = results.rowCount;
-            console.log("sig total: ", sigTotal);
-            //return sigTotal;
         })
         .then(() => {
             db.sigPic(req.session.signatureId)
@@ -506,8 +454,6 @@ app.get("/signatories", (req, res) => {
     } else {
         db.getNames()
             .then((results) => {
-                //console.log("329 getNames results: ", results);
-
                 if (req.session.signatureId == "") {
                     res.redirect("/register");
                 } else {
@@ -533,14 +479,12 @@ app.get("/signatories", (req, res) => {
 
 app.get("/sigs-by-city/:selCity", (req, res) => {
     const selCity = req.params.selCity;
-    console.log("sel_city: ", selCity);
 
     if (!req.session.userId) {
         res.redirect("/register");
     } else {
         db.getCity(selCity)
             .then((results) => {
-                console.log("361 getCity results.rows", results.rows[0]);
                 const citylist = results.rows;
 
                 res.render("sigs-by-city", {
@@ -550,10 +494,10 @@ app.get("/sigs-by-city/:selCity", (req, res) => {
                 });
             })
             .catch((err) => {
-                console.log("365 err getCity db", err);
+                console.log("err in getCity: ", err);
             })
             .catch((err) => {
-                console.log("379 err in GET sigs-by-city : ", err);
+                console.log("err in GET sigs-by-city: ", err);
             });
     }
 });
@@ -571,4 +515,4 @@ if (require.main === module) {
     );
 }
 
-//if block prevents testing software from starting server
+//note: if block prevents testing software from starting server
